@@ -1,0 +1,38 @@
+{
+    "require": {
+        "slim/slim": "^4.15.1",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.1",
+        "php-di/php-di": "^7.1",
+        "lcobucci/jwt": "^5.6",
+        "vlucas/phpdotenv": "^5.6",
+        "doctrine/orm": "^3.0",
+        "doctrine/dbal": "^4.0",
+        "symfony/cache": "^8.0",
+        "symfony/var-exporter": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Blabster\\Backend\\": "src/",
+            "Blabster\\Backend\\Config\\": "config/"
+        }
+    },
+    "require-dev": {
+        "vimeo/psalm": "^6.13",
+        "phpstan/phpstan": "^2.1",
+        "brainmaestro/composer-git-hooks": "^3.0",
+        "s-drozdov/check-psr4": "^0.0.2"
+    },
+    "extra": {
+        "hooks": {
+            "config": {
+                "stop-on-failure": ["pre-commit"]
+            },
+            "pre-commit": [
+                "./vendor/bin/phpstan analyse --memory-limit=1G --no-progress",
+                "./vendor/bin/psalm --no-cache --show-info=true --no-diff",
+                "./vendor/bin/checkPsr4"
+            ]
+        }
+    }
+}

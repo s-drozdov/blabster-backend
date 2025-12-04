@@ -1,0 +1,9 @@
+.env
+/vendor/
+/var/
+/db/
+
+/phpunit.xml
+/.phpunit.cache/
+
+phpstan.neon

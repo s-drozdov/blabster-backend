@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: ./docker/compose/php-fpm
+      args:
+        APP_NAME: ${APP_NAME}
+        FPM_PORT: ${FPM_PORT}
+    container_name: ${APP_NAME}_app
+    volumes:
+      - .:/var/www/${APP_NAME}
+      - ./docker/config/php.ini:/usr/local/etc/php/php.ini:ro
+    environment:
+      PHP_IDE_CONFIG: "serverName=${APP_NAME}"
+      TZ: '${TZ}'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    # restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./docker/compose/nginx
+      args:
+        APP_NAME: ${APP_NAME}
+        FPM_PORT: ${FPM_PORT}
+    container_name: ${APP_NAME}_nginx
+    hostname: ${APP_NAME}_nginx
+    volumes:
+      - .:/var/www/${APP_NAME}
+    depends_on:
+      - app
+    # restart: unless-stopped
+    ports:
+      - 8101:80
