@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Backend\Infrastructure\Enum;
+namespace Blabster\Infrastructure\Enum;
 
 enum AppEnvironment: string
 {

@@ -9,12 +9,13 @@
         "doctrine/orm": "^3.0",
         "doctrine/dbal": "^4.0",
         "symfony/cache": "^8.0",
-        "symfony/var-exporter": "^7"
+        "symfony/var-exporter": "^7",
+        "webmozart/assert": "^1.12",
+        "doctrine/migrations": "^3.9"
     },
     "autoload": {
         "psr-4": {
-            "Blabster\\Backend\\": "src/",
-            "Blabster\\Backend\\Config\\": "config/"
+            "Blabster\\": "src/"
         }
     },
     "require-dev": {

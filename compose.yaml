@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/var/www/${APP_NAME}
       - ./docker/config/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./db:/data/db
     environment:
       PHP_IDE_CONFIG: "serverName=${APP_NAME}"
       TZ: '${TZ}'

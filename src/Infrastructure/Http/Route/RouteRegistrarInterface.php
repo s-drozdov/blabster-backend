@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Backend\Infrastructure\Http\Route;
+namespace Blabster\Infrastructure\Http\Route;
 
 use Slim\App;
 use Psr\Container\ContainerInterface;

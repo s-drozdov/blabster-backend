@@ -2,36 +2,22 @@
 
 declare(strict_types=1);
 
-use DI\Container;
 use function DI\create;
-use Doctrine\ORM\ORMSetup;
+use function DI\get;
 use Doctrine\ORM\EntityManager;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Tools\DsnParser;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Blabster\Backend\Infrastructure\Http\Route\RouteRegistrar;
-use Blabster\Backend\Infrastructure\Http\Route\RouteRegistrarInterface;
+use Blabster\Infrastructure\Http\Route\RouteRegistrar;
+use Blabster\Infrastructure\Repository\UserRepository;
+use Blabster\Domain\Repository\UserRepositoryInterface;
+use Blabster\Infrastructure\Http\Route\RouteRegistrarInterface;
 
-return [
+$servicesConfig = [
     RouteRegistrarInterface::class => create(RouteRegistrar::class),
-    
-    EntityManager::class => static function (Container $container): EntityManager {
-        $cache = new FilesystemAdapter(directory: $container->get('doctrine.cache_dir'));
 
-        $config = ORMSetup::createAttributeMetadataConfiguration(
-            $container->get('doctrine.metadata_dirs'),
-            $container->get('doctrine.dev_mode'),
-            null,
-            $cache,
-        );
-
-        $parser = new DsnParser();
-
-        $connection = DriverManager::getConnection(
-            $parser->parse($container->get('doctrine.connection_string')), 
-            $config,
-        );
-
-        return new EntityManager($connection, $config);
-    },
+    UserRepositoryInterface::class => create(UserRepository::class)
+        ->constructor(get(EntityManager::class)),
 ];
+
+return array_merge(
+    require_once(__DIR__ . '/doctrine.php'),
+    $servicesConfig,
+);
