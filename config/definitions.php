@@ -6,6 +6,7 @@ use Blabster\Infrastructure\Enum\AppEnvironment;
 
 return [
     'app.name' => $_ENV['APP_NAME'],
+    'app.is_debug' => (bool) $_ENV['APP_DEBUG'],
 
     'jwt.secret' => $_ENV['JWT_SECRET'],
     'jwt.ttl' => (int) $_ENV['JWT_TTL'],

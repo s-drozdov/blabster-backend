@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Route;
+namespace Blabster\Infrastructure\Bootstrap;
 
 use Slim\App;
 use Psr\Container\ContainerInterface;
 
-interface RouteRegistrarInterface
+interface BootstrapInterface
 {
     /**
      * @param App<ContainerInterface> $app
      */
-    public function register(App $app): void;
+    public function perform(App $app): void;
 }

@@ -31,4 +31,4 @@ services:
       - app
     # restart: unless-stopped
     ports:
-      - 8101:80
+      - 8102:80
