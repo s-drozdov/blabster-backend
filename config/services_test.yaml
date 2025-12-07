@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true 
+        public: true
+
+    Blabster\Infrastructure\Bus\Cache\BusRedisCache:
+        arguments:
+            $servicePrefix: 'tests_%env(APP_NAME)%'
+        public: true
+        
+# helpers

@@ -1,0 +1,122 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    isHtmlExceptions: '%env(IS_HTML_EXCEPTIONS)%'
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    
+    Blabster\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Infrastructure/Kernel.php'
+    
+    Nyholm\Psr7\Factory\Psr17Factory:
+        class: Nyholm\Psr7\Factory\Psr17Factory
+
+    Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory:
+        arguments:
+            - '@Nyholm\Psr7\Factory\Psr17Factory'
+            - '@Nyholm\Psr7\Factory\Psr17Factory'
+            - '@Nyholm\Psr7\Factory\Psr17Factory'
+            - '@Nyholm\Psr7\Factory\Psr17Factory'
+    
+    Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface:
+        class: Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory
+
+    Mezzio\ProblemDetails\ProblemDetailsResponseFactory:
+        arguments:
+            $responseFactory: '@Psr\Http\Message\ResponseFactoryInterface'
+            $isDebug: '%kernel.debug%'
+            $jsonFlags: 448
+
+    Blabster\Infrastructure\Event\Subscriber\Exception\EventResponse\EventResponseProviderInterface:
+        class: Blabster\Infrastructure\Event\Subscriber\Exception\EventResponse\EventResponseDispatcher
+        arguments:
+            $typeToProviderMap:
+                Symfony\Component\Validator\Exception\ValidationFailedException: 
+                    '@Blabster\Infrastructure\Event\Subscriber\Exception\ExceptionResponse\ValidationFailedResponseProvider'
+                Symfony\Component\Serializer\Exception\NotNormalizableValueException: 
+                    '@Blabster\Infrastructure\Event\Subscriber\Exception\ExceptionResponse\NotNormalizableValueResponseProvider'
+        
+    Blabster\Application\Bus\Resolver\ResultFqcn\ResultFqcnResolverInterface:
+        class: Blabster\Application\Bus\Resolver\ResultFqcn\ConcatenationResultFqcnResolver
+    
+    Blabster\Library\DbTransaction\DbTransactionInterface:
+        class: Blabster\Library\DbTransaction\FakeDbTransaction
+
+    Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor: ~
+
+# result converters
+
+    Blabster\Application\Dto\Converter\PaginationResultToDtoConverter: ~
+
+# buses
+    Blabster\Infrastructure\Bus\CommandBusInterface:
+        class: Blabster\Infrastructure\Bus\CommandBus
+
+    Blabster\Infrastructure\Bus\EventBusInterface:
+        class: Blabster\Infrastructure\Bus\EventBus
+
+    Blabster\Infrastructure\Bus\QueryBusInterface:
+        class: Blabster\Infrastructure\Bus\QueryBus
+        
+# library
+    Blabster\Library\Generator\PageGeneratorInterface:
+        class: Blabster\Library\Generator\PageGenerator
+        
+# helpers
+    Blabster\Library\Helper\String\StringHelperInterface:
+        class: Blabster\Library\Helper\String\StringHelper
+
+    Blabster\Library\Helper\Array\ArrayHelperInterface:
+        class: Blabster\Library\Helper\Array\ArrayHelper
+
+    Blabster\Library\Helper\Reflection\ReflectionHelperInterface:
+        class: Blabster\Library\Helper\Reflection\ReflectionHelper
+
+    Blabster\Library\Helper\Translation\TranslationHelperInterface:
+        class: Blabster\Library\Helper\Translation\TranslationHelper
+
+# providers
+    # Blabster\Library\Provider\Cache\CacheProviderInterface:
+    #     class: Blabster\Library\Provider\Cache\CacheProvider
+    #     arguments:
+    #         $servicePrefix: '%env(APP_NAME)%'
+
+# normalizers
+    Blabster\Infrastructure\Serializer\Normalizer\ListInterfaceNormalizer:
+        tags:
+            - { name: 'serializer.normalizer', priority: 500 }
+
+    Blabster\Infrastructure\Serializer\Normalizer\MapInterfaceNormalizer:
+        tags:
+            - { name: 'serializer.normalizer', priority: 500 }
+
+    Blabster\Infrastructure\Serializer\Normalizer\ExceptionNormalizer:
+        tags:
+            - { name: 'serializer.normalizer', priority: 500 }
+
+# denormalizers
+    Blabster\Infrastructure\Serializer\Denormalizer\NullDenormalizer:
+        tags:
+            - { name: 'serializer.denormalizer', priority: 500 }
+    
+# value resolvers
+    _instanceof:
+        Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver:
+            tags: ['controller.argument_value_resolver']
+
+# event subscribers
+    Blabster\Infrastructure\Event\Subscriber\Exception\ExceptionSubscriber:
+        tags: ['kernel.event_subscriber']
+
+# handlers

@@ -1,0 +1,43 @@
+framework:
+    messenger:
+        default_bus: service.bus
+        buses:
+            service.bus:
+                default_middleware: true
+
+            command.bus:
+                default_middleware: true
+                
+            query.bus:
+                default_middleware: true
+
+            event.bus:
+                default_middleware: allow_no_handlers
+
+        transports:
+
+            failed.producer:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    flushTimeout: 10000
+                    flushRetries: 5
+                    topic:
+                        name: failed
+                    kafka_conf:
+                        client.id: '%env(POD_NAME)%'
+                        metadata.broker.list: '%env(KAFKA_BROKERS)%'
+            
+        failure_transport: failed.producer
+
+        routing:
+            
+        serializer:
+            default_serializer: messenger.transport.symfony_serializer
+
+# when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'

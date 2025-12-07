@@ -1,0 +1,114 @@
+{
+    "name": "s-drozdov/blabster-backend-symfony",
+    "description": "Blabster backend",
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.4",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-memcached": "*",
+        "ext-pdo_sqlite": "*",
+        "ext-simplexml": "*",
+        "api-platform/core": "^4.1.7",
+        "doctrine/doctrine-bundle": "^3.1",
+        "doctrine/doctrine-migrations-bundle": "^4.0",
+        "doctrine/migrations": "^3.9",
+        "doctrine/orm": "^3.5",
+        "mezzio/mezzio-problem-details": "*",
+        "nelmio/api-doc-bundle": "*",
+        "nelmio/cors-bundle": "*",
+        "nyholm/psr7": "*",
+        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpstan/phpdoc-parser": "^2.1",
+        "symfony/console": "~7.3.7",
+        "symfony/dotenv": "~7.3.7",
+        "symfony/flex": "^2.5",
+        "symfony/framework-bundle": "~7.3.7",
+        "symfony/messenger": "~7.3.7",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/property-access": "~7.3.7",
+        "symfony/property-info": "~7.3.7",
+        "symfony/psr-http-message-bridge": "~7.3.7",
+        "symfony/runtime": "~7.3.7",
+        "symfony/serializer": "~7.3.7",
+        "symfony/validator": "~7.3.7",
+        "symfony/yaml": "~7.3.7",
+        "webmozart/assert": "^1.12.1"
+    },
+    "require-dev": {
+        "ext-pcov": "*",
+        "ext-xml": "*",
+        "brainmaestro/composer-git-hooks": "^3.0",
+        "fakerphp/faker": "^1.24",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^12.1",
+        "psalm/plugin-symfony": "~5.2.7",
+        "s-drozdov/check-psr4": "*",
+        "symfony/browser-kit": "~7.3.7",
+        "symfony/http-client": "~7.3.7",
+        "vimeo/psalm": "^6.10"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "bump-after-update": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Blabster\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Blabster\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "~7.3.7"
+        },
+        "hooks": {
+            "config": {
+                "stop-on-failure": ["pre-commit", "pre-push"]
+            },
+            "pre-commit": [
+                "./vendor/bin/phpstan analyse --memory-limit=1G --no-progress",
+                "./vendor/bin/psalm --no-cache --show-info=true --no-diff",
+                "./vendor/bin/checkPsr4",
+                "./bin/console"
+            ],
+            "pre-push": [
+                "./vendor/bin/phpunit tests/Unit"
+            ]
+        }
+    }
+}

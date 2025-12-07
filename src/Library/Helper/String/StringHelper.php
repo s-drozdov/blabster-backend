@@ -1,0 +1,72 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Blabster\Library\Helper\String;
+
+use Override;
+
+use function Symfony\Component\String\u;
+use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Library\Helper\Reflection\ReflectionHelperInterface;
+
+final readonly class StringHelper implements StringHelperInterface
+{
+    private const string TRANSLATION_PATTERN = '%s:%s';
+
+    public function __construct(
+        private readonly ReflectionHelperInterface $reflectionHelper,
+    ) {
+        /*_*/
+    }
+
+    #[Override]
+    public function kebabToHumanReadable(string $source): string
+    {
+        return ucfirst(
+            (string) u($source)->replace('-', ' '),
+        );
+    }
+
+    #[Override]
+    public function snakeToHumanReadable(string $source): string
+    {
+        return ucfirst(
+            (string) u($source)->replace('_', ' '),
+        );
+    }
+
+    #[Override]
+    public function snakeToPascal(string $source): string
+    {
+        return implode(
+            '',
+            array_map(
+                fn (string $word) => ucfirst($word),
+                explode('_', $source),
+            ),
+        );
+    }
+
+    #[Override]
+    public function nestedToSquareBrackets(string $source): string
+    {
+        $levelList = explode('.', $source);
+
+        return array_reduce(
+            $levelList,
+            fn (string $acc, string $cur) => $acc . sprintf('[%s]', $cur),
+            '',
+        );
+    }
+
+    #[Override]
+    public function getSlugForClass(string $slug, string|object $class): string
+    {
+        return sprintf(
+            self::TRANSLATION_PATTERN,
+            $this->reflectionHelper->getClassShortName($class),
+            $slug,
+        );
+    }
+}

@@ -1,0 +1,9 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Blabster API
+            description: Blabster module
+            version: 1.0.0
+    models:
+        use_jms: false
+        names: true
