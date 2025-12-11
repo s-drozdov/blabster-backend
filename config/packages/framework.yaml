@@ -14,6 +14,10 @@ framework:
             enable_max_depth: true
 
     default_locale: en
+
+    cache:
+        app: cache.adapter.memcached
+        default_memcached_provider: '%env(MEMCACHED_DSN)%'
     
 when@test:
     framework:

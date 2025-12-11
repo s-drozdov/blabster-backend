@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Application\Dto\Mapper;
 
-use BadMethodCallException;
+use LogicException;
 use Blabster\Library\Dto\DtoInterface;
 use Blabster\Domain\DomainObjectInterface;
 
@@ -18,7 +18,7 @@ interface MapperInterface
      * @param TObject $object
      * 
      * @return TDto
-     * @throws BadMethodCallException
+     * @throws LogicException
      */
     public function mapDomainObjectToDto(DomainObjectInterface $object): DtoInterface;
 
@@ -26,7 +26,7 @@ interface MapperInterface
      * @param TDto $dto
      * 
      * @return TObject
-     * @throws BadMethodCallException
+     * @throws LogicException
      */
     public function mapDtoToDomainObject(DtoInterface $dto): DomainObjectInterface;
 

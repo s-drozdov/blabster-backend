@@ -4,67 +4,84 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Repository;
 
-use Override;
 use LogicException;
 use DomainException;
 use Webmozart\Assert\Assert;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityRepository;
 use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Library\Collection\Collection;
+use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Library\Collection\ListInterface;
 use Blabster\Domain\Repository\RepositoryInterface;
+use Blabster\Library\Helper\String\StringHelperInterface;
 
 /**
  * @template T of EntityInterface
- * @extends EntityRepository<T>
- * @implements RepositoryInterface<T>
+ * @phpstan-ignore trait.unused 
  */
-abstract class AbstractRepository extends EntityRepository implements RepositoryInterface
+trait DoctrinePersistable
 {
-    private const string ERROR_NOT_FOUND = 'Entity with uuid %s is not found';
-    private const string COLUMN_NOT_FOUND = 'Column "%s" not found in row';
-
-    #[Override]
+    public const string COLUMN_NOT_FOUND = 'Column "%s" not found in row';
+    
+    /**
+     * @param T $entity
+     */
     public function save(EntityInterface $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
+    /**
+     * @param T $entity
+     */
     public function update(EntityInterface $entity): void
     {
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
-    public function get(int $id): EntityInterface
+    /**
+     * @return T
+     * @throws InvalidArgumentException
+     */
+    public function get(UuidInterface $uuid): EntityInterface
     {
-        $entity = $this->find($id);
+        $entity = $this->find((string) $uuid);
 
         Assert::notNull(
             $entity, 
-            sprintf(self::ERROR_NOT_FOUND, $id),
+            sprintf(
+                RepositoryInterface::ERROR_NOT_FOUND,
+                $this->getStringHelper()->getClassShortName($this),
+                (string) $uuid,
+            ),
         );
 
         return $entity;
     }
 
-    #[Override]
-    public function findOne(int $id): ?EntityInterface
+    /**
+     * @return T|null
+     */
+    public function findOne(UuidInterface $uuid): ?EntityInterface
     {
-        return $this->find($id);
+        return $this->find((string) $uuid);
     }
 
-    #[Override]
+    /**
+     * @param T $entity
+     * 
+     * @throws InvalidArgumentException
+     */
     public function delete(EntityInterface $entity): void
     {
         $this->getEntityManager()->remove($entity);
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
+    /**
+     * @param ListInterface<T> $entityList
+     */
     public function bulkSave(ListInterface $entityList): void
     {
         foreach ($entityList as $entity) {
@@ -74,13 +91,19 @@ abstract class AbstractRepository extends EntityRepository implements Repository
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
+    /**
+     * @param ListInterface<T> $entityList
+     */
     public function bulkUpdate(ListInterface $entityList): void
     {
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
+    /**
+     * @param ListInterface<T> $entityList
+     * 
+     * @throws InvalidArgumentException
+     */
     public function bulkDelete(ListInterface $entityList): void
     {
         foreach ($entityList as $entity) {
@@ -90,7 +113,6 @@ abstract class AbstractRepository extends EntityRepository implements Repository
         $this->getEntityManager()->flush();
     }
 
-    #[Override]
     public function countAll(): int
     {
         return $this->count();
@@ -174,4 +196,6 @@ abstract class AbstractRepository extends EntityRepository implements Repository
         /** @var ListInterface<TColumnValue> $result */
         return $result;
     }
+
+    abstract private function getStringHelper(): StringHelperInterface;
 }

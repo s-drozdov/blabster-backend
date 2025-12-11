@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Blabster\Domain\Service\PowChallenge\Validation;
+
+use Webmozart\Assert\Assert;
+use InvalidArgumentException;
+use Blabster\Domain\Service\ServiceInterface;
+use Blabster\Domain\ValueObject\UuidInterface;
+use Blabster\Domain\Repository\PowChallengeRepositoryInterface;
+
+final readonly class PowChallengeValidationService implements ServiceInterface
+{
+    private const string ALGORYTHM = 'sha256';
+    private const string VALIDATION_ERROR = 'Validation proof-of-work was not passed';
+
+    public function __construct(
+        private PowChallengeRepositoryInterface $powChallengeRepository,
+    ) {
+        /*_*/
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function perform(UuidInterface $powChallengeUuid, string $nonce): void
+    {
+        $powChallenge = $this->powChallengeRepository->get($powChallengeUuid);
+
+        $prefix = str_repeat('0', $powChallenge->getDifficulty());
+        $hash = hash(self::ALGORYTHM, $powChallenge->getPrefix() . $powChallenge->getSalt() . $nonce);
+
+        Assert::eq(
+            substr($hash, 0, $powChallenge->getDifficulty()),
+            $prefix,
+            self::VALIDATION_ERROR,
+        );
+    }
+}

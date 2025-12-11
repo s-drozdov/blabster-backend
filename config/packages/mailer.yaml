@@ -1,0 +1,8 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+
+        dkim_signer:
+            key: 'file://%kernel.project_dir%/var/certificates/dkim.pem'
+            domain: '%env(DKIM_DOMAIN)%'
+            select: '%env(DKIM_SELECTOR)%'

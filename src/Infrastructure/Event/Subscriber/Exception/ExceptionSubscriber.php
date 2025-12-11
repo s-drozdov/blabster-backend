@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Blabster\Infrastructure\Event\Subscriber\Exception\EventResponse\EventResponseProviderInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * to get exceptions in html for debug
@@ -21,6 +22,7 @@ final class ExceptionSubscriber implements EventSubscriberInterface
     public function __construct(
         private ContainerBagInterface $params,
         private EventResponseProviderInterface $eventResponseProviderInterface,
+        private LoggerInterface $logger,
     ) {
         /*_*/
     }
@@ -35,6 +37,8 @@ final class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
+        $this->logger->error($event->getThrowable());
+
         if ((bool) $this->params->get('isHtmlExceptions')) {
             return;
         }

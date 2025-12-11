@@ -6,19 +6,13 @@ namespace Blabster\Library\Helper\String;
 
 use Override;
 
+use Webmozart\Assert\Assert;
 use function Symfony\Component\String\u;
 use Blabster\Library\Helper\String\StringHelperInterface;
-use Blabster\Library\Helper\Reflection\ReflectionHelperInterface;
 
 final readonly class StringHelper implements StringHelperInterface
 {
     private const string TRANSLATION_PATTERN = '%s:%s';
-
-    public function __construct(
-        private readonly ReflectionHelperInterface $reflectionHelper,
-    ) {
-        /*_*/
-    }
 
     #[Override]
     public function kebabToHumanReadable(string $source): string
@@ -61,11 +55,22 @@ final readonly class StringHelper implements StringHelperInterface
     }
 
     #[Override]
+    public function getClassShortName(string|object $class): string
+    {
+        $fqcn = (is_string($class)) ? $class : $class::class;
+
+        $pos = strrpos($fqcn, '\\');
+        Assert::notFalse($pos);
+
+        return substr($fqcn, $pos + 1);
+    }
+
+    #[Override]
     public function getSlugForClass(string $slug, string|object $class): string
     {
         return sprintf(
             self::TRANSLATION_PATTERN,
-            $this->reflectionHelper->getClassShortName($class),
+            $this->getClassShortName($class),
             $slug,
         );
     }

@@ -1,0 +1,14 @@
+Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand:
+    properties:
+        email:
+            - NotBlank: ~
+            - Email: ~
+        pow_challenge_uuid:
+            - NotBlank: ~
+            - Uuid: ~
+        pow_challenge_nonce:
+            - NotBlank: ~
+        fingerprint:
+            - NotBlank: ~
+        turnstile_token:
+            - NotBlank: ~

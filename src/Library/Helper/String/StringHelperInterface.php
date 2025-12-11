@@ -19,5 +19,10 @@ interface StringHelperInterface extends HelperInterface
     /**
      * @param class-string|object $class
      */
+    public function getClassShortName(string|object $class): string;
+
+    /**
+     * @param class-string|object $class
+     */
     public function getSlugForClass(string $slug, string|object $class): string;
 }

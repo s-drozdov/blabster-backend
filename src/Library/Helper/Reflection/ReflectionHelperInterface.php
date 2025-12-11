@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Library\Helper\Reflection;
 
+use ReflectionException;
 use InvalidArgumentException;
 use Blabster\Library\Helper\HelperInterface;
 
@@ -32,4 +33,9 @@ interface ReflectionHelperInterface extends HelperInterface
      * @param object|class-string $target
      */
     public function getClassShortName(object|string $target): string;
+
+    /**
+     * @throws ReflectionException
+     */
+    public function setProperty(object $object, string $property, mixed $value): void;
 }

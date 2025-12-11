@@ -70,7 +70,17 @@ final readonly class ReflectionHelper implements ReflectionHelperInterface
     #[Override]
     public function getClassShortName(object|string $target): string
     {
-        return (new ReflectionClass($target))
-            ->getShortName();
+        return new ReflectionClass($target)->getShortName();
+    }
+
+    #[Override]
+    public function setProperty(object $object, string $property, mixed $value): void
+    {
+        $reflection = new ReflectionClass($object);
+
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+
+        $property->setValue($object, $value);
     }
 }

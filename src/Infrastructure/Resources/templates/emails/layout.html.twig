@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ subject|default('') }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#f5f5f5; padding:30px;">
+
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">
+
+            <table width="600" cellpadding="20" cellspacing="0" 
+                   style="background:#ffffff; border-radius:8px;">
+                <tr>
+                    <td>
+
+                        {% block body %}{% endblock %}
+
+                    </td>
+                </tr>
+            </table>
+
+            <p style="color:#999; font-size:12px; margin-top:20px;">
+                This is automatic mailing. Please do not reply.
+            </p>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

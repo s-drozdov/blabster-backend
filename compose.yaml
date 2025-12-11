@@ -32,3 +32,8 @@ services:
     # restart: unless-stopped
     ports:
       - 8101:80
+
+  memcached:
+    image: memcached:latest
+    ports:
+      - "11212:11211"

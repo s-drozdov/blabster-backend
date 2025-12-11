@@ -55,6 +55,46 @@ services:
 
     Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor: ~
 
+    Psr\SimpleCache\CacheInterface:
+        class: Symfony\Component\Cache\Psr16Cache
+        arguments:
+            - '@cache.app' 
+
+# factories
+
+    Blabster\Domain\Factory\PowChallengeFactory:
+        arguments:
+            $ttlSeconds: '%env(POW_CHALLENGE_TTL)%'
+
+    Blabster\Domain\Factory\FingerprintFactory:
+        arguments:
+            $ttlSeconds: '%env(FINGERPRINT_TTL)%'
+
+# repositories
+
+    Blabster\Domain\Repository\PowChallengeRepositoryInterface:
+        class: Blabster\Infrastructure\Repository\PowChallengeRepository
+        arguments:
+            $ttlSeconds: '%env(POW_CHALLENGE_TTL)%'
+
+    Blabster\Domain\Repository\FingerprintRepositoryInterface:
+        class: Blabster\Infrastructure\Repository\FingerprintRepository
+        arguments:
+            $ttlSeconds: '%env(FINGERPRINT_TTL)%'
+
+    Blabster\Domain\Repository\OtpRepositoryInterface:
+        class: Blabster\Infrastructure\Repository\OtpRepository
+        arguments:
+            $ttlSeconds: '%env(OTP_TTL)%'
+
+# domain services
+
+    Blabster\Domain\Service\Fingerprint\Validation\FingerprintMatchService: ~
+
+    Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService:
+        arguments:
+            $difficulty: '%env(POW_CHALLENGE_DIFFICULTY)%'
+
 # result converters
 
     Blabster\Application\Dto\Converter\PaginationResultToDtoConverter: ~
@@ -68,23 +108,46 @@ services:
 
     Blabster\Infrastructure\Bus\QueryBusInterface:
         class: Blabster\Infrastructure\Bus\QueryBus
+
+# application services
+
+    Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface:
+        class: Blabster\Infrastructure\Service\Mail\OtpMailService
+        arguments:
+            $expirationSeconds: '%env(OTP_TTL)%'
+            $senderEmail: '%env(MAILER_NOREPLY_SENDER)%'
+            $emailSubject: '%env(MAILER_OTP_SUBJECT)%'
+            $templateHtml: '%env(MAILER_TEMPLATE_HTML)%'
+            $templateText: '%env(MAILER_TEMPLATE_TEXT)%'
+            $messageLocale: '%env(MAILER_LOCALE)%'
+            
         
 # library
     Blabster\Library\Generator\PageGeneratorInterface:
         class: Blabster\Library\Generator\PageGenerator
+
+# SDK
+
+    Blabster\Library\SDK\Turnsnile\TurnsnileSdk:
+        arguments:
+            $apiUrl: '%env(TURNSTILE_API_URL)%'
+            $apiSecret: '%env(TURNSTILE_API_SECRET)%'
         
 # helpers
-    Blabster\Library\Helper\String\StringHelperInterface:
-        class: Blabster\Library\Helper\String\StringHelper
-
     Blabster\Library\Helper\Array\ArrayHelperInterface:
         class: Blabster\Library\Helper\Array\ArrayHelper
+
+    Blabster\Library\Helper\DateTime\DateTimeHelperInterface:
+        class: Blabster\Library\Helper\DateTime\DateTimeHelper
 
     Blabster\Library\Helper\Reflection\ReflectionHelperInterface:
         class: Blabster\Library\Helper\Reflection\ReflectionHelper
 
-    Blabster\Library\Helper\Translation\TranslationHelperInterface:
-        class: Blabster\Library\Helper\Translation\TranslationHelper
+    Blabster\Library\Helper\String\StringHelperInterface:
+        class: Blabster\Library\Helper\String\StringHelper
+
+    Blabster\Library\Helper\Uuid\UuidHelperInterface:
+        class: Blabster\Library\Helper\Uuid\RamseyUuidHelper
 
 # providers
     # Blabster\Library\Provider\Cache\CacheProviderInterface:
@@ -119,4 +182,11 @@ services:
     Blabster\Infrastructure\Event\Subscriber\Exception\ExceptionSubscriber:
         tags: ['kernel.event_subscriber']
 
+    Blabster\Infrastructure\Event\Subscriber\FailedMessage\FailedMessageSubscriber:
+        tags: ['kernel.event_subscriber']
+
 # handlers
+
+    Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand }
