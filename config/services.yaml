@@ -185,8 +185,12 @@ services:
     Blabster\Infrastructure\Event\Subscriber\FailedMessage\FailedMessageSubscriber:
         tags: ['kernel.event_subscriber']
 
-# handlers
+# bus handlers
 
     Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand }
+
+    Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommand }

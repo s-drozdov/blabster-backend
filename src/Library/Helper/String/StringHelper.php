@@ -12,7 +12,7 @@ use Blabster\Library\Helper\String\StringHelperInterface;
 
 final readonly class StringHelper implements StringHelperInterface
 {
-    private const string TRANSLATION_PATTERN = '%s:%s';
+    private const string CACHE_SLUG_PATTERN = '%s.%s';
 
     #[Override]
     public function kebabToHumanReadable(string $source): string
@@ -69,7 +69,7 @@ final readonly class StringHelper implements StringHelperInterface
     public function getSlugForClass(string $slug, string|object $class): string
     {
         return sprintf(
-            self::TRANSLATION_PATTERN,
+            self::CACHE_SLUG_PATTERN,
             $this->getClassShortName($class),
             $slug,
         );
