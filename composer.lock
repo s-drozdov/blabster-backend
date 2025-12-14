@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e576bc8129b19c51a55bed5f8f8490b",
+    "content-hash": "5812749d0e70e7c41684e55f9a7bb558",
     "packages": [
         {
             "name": "api-platform/core",
@@ -5568,7 +5568,7 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "7.3.x-dev",
+            "version": "v7.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -5584,7 +5584,6 @@
                 "php": ">=8.2",
                 "symfony/deprecation-contracts": "^2.5|^3"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5616,7 +5615,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/7.3"
+                "source": "https://github.com/symfony/options-resolver/tree/v7.3.8"
             },
             "funding": [
                 {

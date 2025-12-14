@@ -11,7 +11,7 @@ final readonly class AuthLoginCommand implements CommandInterface
 {
     public function __construct(
         public string $email,
-        public ?UuidInterface $otp_uuid,
+        public UuidInterface $otp_uuid,
         public string $otp_code,
     ) {
         /*_*/

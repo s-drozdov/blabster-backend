@@ -6,7 +6,6 @@ namespace Blabster\Application\UseCase\Command\Otp\Create;
 
 use Override;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
 use Blabster\Domain\Service\Otp\Create\OtpCreateService;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
 use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
@@ -25,7 +24,6 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
         private TurnstileValidationService $turnstileValidationService,
         private OtpCreateService $otpCreateService,
         private OtpMailServiceInterface $otpMailService,
-        private UuidHelperInterface $uuidHelper,
     ) {
         /*_*/
     }
@@ -52,7 +50,7 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
     private function performValidation(OtpCreateCommand $command): void
     {
         $this->powChallengeValidationService->perform(
-            $this->uuidHelper->fromString($command->pow_challenge_uuid), 
+            $command->pow_challenge_uuid,
             $command->pow_challenge_nonce,
         );
         $this->turnstileValidationService->perform($command->turnstile_token);
