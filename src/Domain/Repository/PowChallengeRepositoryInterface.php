@@ -18,7 +18,7 @@ interface PowChallengeRepositoryInterface extends RepositoryInterface
      * @return PowChallenge
      * @throws InvalidArgumentException
      */
-    public function get(UuidInterface $uuid): EntityInterface;
+    public function getByUuid(UuidInterface $uuid): EntityInterface;
 
     public function save(PowChallenge $entity): void;
 }

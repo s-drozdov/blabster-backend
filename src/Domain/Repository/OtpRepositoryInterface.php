@@ -18,7 +18,7 @@ interface OtpRepositoryInterface extends RepositoryInterface
      * @return Otp
      * @throws InvalidArgumentException
      */
-    public function get(UuidInterface $uuid): EntityInterface;
+    public function getByUuid(UuidInterface $uuid): EntityInterface;
 
     public function save(Otp $entity): void;
 }

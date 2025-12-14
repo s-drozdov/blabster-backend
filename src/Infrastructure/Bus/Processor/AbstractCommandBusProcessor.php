@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Bus\Processor;
 
+use Blabster\Application\Bus\CqrsBusInterface;
 use Symfony\Component\Console\Command\Command;
+use Blabster\Application\Bus\CqrsResultInterface;
+use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Application\Bus\CqrsResultInterface;
-use Blabster\Infrastructure\Bus\CqrsBusInterface;
 
 /**
  * @template TElement of CqrsElementInterface

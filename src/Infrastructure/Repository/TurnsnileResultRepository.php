@@ -21,7 +21,7 @@ final class TurnsnileResultRepository implements TurnsnileResultRepositoryInterf
     }
     
     #[Override]
-    public function get(string $turnsnileToken, ?string $clientRemoteIp = null): TurnsnileResult
+    public function getByUuid(string $turnsnileToken, ?string $clientRemoteIp = null): TurnsnileResult
     {
         $response = $this->turnsnileSdk->getResult($turnsnileToken, $clientRemoteIp);
         

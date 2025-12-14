@@ -24,7 +24,7 @@ final readonly class TurnstileValidationService implements ServiceInterface
      */
     public function perform(string $token): void
     {
-        $result = $this->turnsnileResultRepository->get($token);
+        $result = $this->turnsnileResultRepository->getByUuid($token);
 
         Assert::notFalse($result->isSuccess(), self::ERROR_INVALID_TOKEN);
     }

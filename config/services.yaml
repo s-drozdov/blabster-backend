@@ -70,6 +70,10 @@ services:
         arguments:
             $ttlSeconds: '%env(FINGERPRINT_TTL)%'
 
+    Blabster\Domain\Factory\RefreshTokenFactory:
+        arguments:
+            $expirationPeriod: '%env(REFRESH_TOKEN_EXPIRATION_PERIOD)%'
+
 # repositories
 
     Blabster\Domain\Repository\PowChallengeRepositoryInterface:
@@ -86,6 +90,9 @@ services:
         class: Blabster\Infrastructure\Repository\OtpRepository
         arguments:
             $ttlSeconds: '%env(OTP_TTL)%'
+
+    Blabster\Domain\Repository\UserRepositoryInterface:
+        class: Blabster\Infrastructure\Repository\UserRepository
 
 # domain services
 
@@ -184,6 +191,12 @@ services:
 
     Blabster\Infrastructure\Event\Subscriber\FailedMessage\FailedMessageSubscriber:
         tags: ['kernel.event_subscriber']
+
+# controllers
+
+    Blabster\Infrastructure\Http\Controller\Auth\LoginAction:
+        arguments:
+            $isCookieSecure: '%env(bool:COOKIE_WITH_SECURE)%'
 
 # bus handlers
 

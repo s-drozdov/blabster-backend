@@ -17,5 +17,5 @@ interface TurnsnileResultRepositoryInterface extends RepositoryInterface
      * @return TurnsnileResult
      * @throws InvalidArgumentException
      */
-    public function get(string $turnsnileToken, ?string $clientRemoteIp = null): EntityInterface;
+    public function getByUuid(string $turnsnileToken, ?string $clientRemoteIp = null): EntityInterface;
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Bus\Processor;
 
-use Symfony\Component\Serializer\SerializerInterface;
+use Blabster\Application\Bus\QueryBusInterface;
 use Blabster\Application\Bus\Query\QueryInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Blabster\Application\Bus\Query\QueryResultInterface;
-use Blabster\Infrastructure\Bus\QueryBusInterface;
 
 /**
  * @template TElement of QueryInterface

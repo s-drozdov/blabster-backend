@@ -1,0 +1,10 @@
+Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand:
+    properties:
+        email:
+            - NotBlank: ~
+            - Email: ~
+        otp_uuid:
+            - NotBlank: ~
+            - Uuid: ~
+        otp_code:
+            - NotBlank: ~

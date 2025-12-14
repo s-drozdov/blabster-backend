@@ -34,15 +34,19 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
     public function __invoke(CqrsElementInterface $command): OtpCreateCommandResult
     {
         $fingerprint = $this->fingerprintMatchService->perform($command->fingerprint);
+        $expiresAt = $fingerprint?->getExpiredAt();
+
+        if ($expiresAt !== null) {
+            return new OtpCreateCommandResult(
+                email: $command->email,
+                ban_expires_at: $expiresAt,
+                otp_uuid: null,
+            );
+        }
+
         $this->performValidation($command);
 
-        $otp = $this->otpCreateService->perform($command->email);
-        $this->otpMailService->perform($otp->getCode(), $otp->getEmail());
-
-        return new OtpCreateCommandResult(
-            email: $command->email,
-            ban_expires_at: $fingerprint?->getExpiredAt(),
-        );
+        return $this->createOtp($command);
     }
 
     private function performValidation(OtpCreateCommand $command): void
@@ -52,5 +56,17 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
             $command->pow_challenge_nonce,
         );
         $this->turnstileValidationService->perform($command->turnstile_token);
+    }
+
+    private function createOtp(OtpCreateCommand $command): OtpCreateCommandResult
+    {
+        $otp = $this->otpCreateService->perform($command->email);
+        $this->otpMailService->perform($otp->getCode(), $otp->getEmail());
+
+        return new OtpCreateCommandResult(
+            email: $command->email,
+            ban_expires_at: null,
+            otp_uuid: $otp->getUuid(),
+        );
     }
 }

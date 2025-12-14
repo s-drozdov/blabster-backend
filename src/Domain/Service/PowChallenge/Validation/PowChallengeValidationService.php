@@ -26,7 +26,7 @@ final readonly class PowChallengeValidationService implements ServiceInterface
      */
     public function perform(UuidInterface $powChallengeUuid, string $nonce): void
     {
-        $powChallenge = $this->powChallengeRepository->get($powChallengeUuid);
+        $powChallenge = $this->powChallengeRepository->getByUuid($powChallengeUuid);
 
         $prefix = str_repeat('0', $powChallenge->getDifficulty());
         $hash = hash(self::ALGORYTHM, $powChallenge->getPrefix() . $powChallenge->getSalt() . $nonce);

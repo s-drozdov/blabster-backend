@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Bus;
+namespace Blabster\Application\Bus;
 
 use Blabster\Application\Bus\Query\QueryInterface;
 use Blabster\Application\Bus\Query\QueryResultInterface;

@@ -19,7 +19,7 @@ trait CachePersistable
      * @return T
      * @psalm-suppress MoreSpecificReturnType
      */
-    public function get(UuidInterface $uuid): EntityInterface
+    public function getByUuid(UuidInterface $uuid): EntityInterface
     {
         /** @var T|null $entity */
         $entity = $this->cache->get(
@@ -28,7 +28,7 @@ trait CachePersistable
 
         Assert::notNull(
             $entity, 
-            sprintf(RepositoryInterface::ERROR_NOT_FOUND, $this->getStringHelper()->getClassShortName($this), $uuid),
+            $this->getNotFoundErrorMessage($uuid),
         );
 
         return $entity;
@@ -38,7 +38,7 @@ trait CachePersistable
      * @return T|null
      * @psalm-suppress MoreSpecificReturnType
      */
-    public function find(UuidInterface $uuid): ?EntityInterface
+    public function findByUuid(UuidInterface $uuid): ?EntityInterface
     {
         /** @var T|null $entity */
         $entity = $this->cache->get(
@@ -65,4 +65,13 @@ trait CachePersistable
      * @return class-string<EntityInterface>
      */
     abstract private function getEntityFqcn(): string;
+
+    private function getNotFoundErrorMessage(UuidInterface $uuid): string
+    {
+        return sprintf(
+            RepositoryInterface::ERROR_NOT_FOUND, 
+            $this->getStringHelper()->getClassShortName($this), 
+            $uuid,
+        );
+    }
 }

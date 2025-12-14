@@ -1,0 +1,5 @@
+Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand:
+    properties:
+        email:
+            - NotBlank: ~
+            - Email: ~

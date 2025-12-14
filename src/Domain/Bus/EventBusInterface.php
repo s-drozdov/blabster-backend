@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Bus;
+namespace Blabster\Domain\Bus;
 
 use Exception;
 use Blabster\Domain\Event\EventInterface;
@@ -14,5 +14,5 @@ interface EventBusInterface extends BusInterface
      * 
      * @throws Exception
      */
-    public function execute(...$eventList): void;
+    public function dispatch(...$eventList): void;
 }

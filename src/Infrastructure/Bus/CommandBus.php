@@ -6,11 +6,11 @@ namespace Blabster\Infrastructure\Bus;
 
 use Override;
 use Symfony\Component\Messenger\HandleTrait;
+use Blabster\Application\Bus\CommandBusInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Blabster\Application\Bus\Command\CommandInterface;
 use Blabster\Application\Bus\Command\CommandResultInterface;
-use Blabster\Infrastructure\Bus\CommandBusInterface;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
 /**
  * @implements CommandBusInterface<CommandInterface, CommandResultInterface>

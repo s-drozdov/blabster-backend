@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Http\Controller\Otp;
 
+use Blabster\Infrastructure\Enum\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Blabster\Application\Bus\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Blabster\Infrastructure\Bus\CommandBusInterface;
 use Blabster\Library\Enum\SerializationContextParam;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -17,7 +18,7 @@ use Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand;
 use Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandResult;
 
 #[AsController]
-#[Route('/otp', name: 'otp_create', methods: [Request::METHOD_POST])]
+#[Route(Action::otp_create->value, name: Action::otp_create->name, methods: [Request::METHOD_POST])]
 final class OtpCreateAction
 {
     public function __construct(

@@ -7,6 +7,7 @@ namespace Blabster\Infrastructure\Repository;
 use LogicException;
 use DomainException;
 use Webmozart\Assert\Assert;
+use InvalidArgumentException;
 use Doctrine\ORM\QueryBuilder;
 use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Library\Collection\Collection;
@@ -17,7 +18,6 @@ use Blabster\Library\Helper\String\StringHelperInterface;
 
 /**
  * @template T of EntityInterface
- * @phpstan-ignore trait.unused 
  */
 trait DoctrinePersistable
 {
@@ -44,7 +44,7 @@ trait DoctrinePersistable
      * @return T
      * @throws InvalidArgumentException
      */
-    public function get(UuidInterface $uuid): EntityInterface
+    public function getByUuid(UuidInterface $uuid): EntityInterface
     {
         $entity = $this->find((string) $uuid);
 
@@ -63,7 +63,7 @@ trait DoctrinePersistable
     /**
      * @return T|null
      */
-    public function findOne(UuidInterface $uuid): ?EntityInterface
+    public function findByUuid(UuidInterface $uuid): ?EntityInterface
     {
         return $this->find((string) $uuid);
     }
@@ -119,6 +119,8 @@ trait DoctrinePersistable
     }
 
     /**
+     * @psalm-suppress MoreSpecificReturnType
+     * 
      * @return Collection<T>
      * @throws DomainException
      */
@@ -135,6 +137,8 @@ trait DoctrinePersistable
     }
 
     /**
+     * @psalm-suppress MoreSpecificReturnType
+     * 
      * @return T|null
      */
     protected function queryBuilderToEntity(QueryBuilder $qb): ?EntityInterface

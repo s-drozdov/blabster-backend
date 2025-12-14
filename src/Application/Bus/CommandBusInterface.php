@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Bus;
+namespace Blabster\Application\Bus;
 
 use Blabster\Application\Bus\Command\CommandInterface;
 use Blabster\Application\Bus\Command\CommandResultInterface;

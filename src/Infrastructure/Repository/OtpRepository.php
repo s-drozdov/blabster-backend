@@ -7,11 +7,14 @@ namespace Blabster\Infrastructure\Repository;
 use Override;
 use Blabster\Domain\Entity\Otp;
 use Psr\SimpleCache\CacheInterface;
+use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Domain\Repository\OtpRepositoryInterface;
 use Blabster\Library\Helper\String\StringHelperInterface;
 
 final class OtpRepository implements OtpRepositoryInterface
 {
+    private const string ERROR_NOT_FOUND_MESSAGE = 'Error. OTP is expired.';
+
     /** @use CachePersistable<Otp> */
     use CachePersistable;
 
@@ -39,5 +42,10 @@ final class OtpRepository implements OtpRepositoryInterface
     private function getEntityFqcn(): string
     {
         return Otp::class;
+    }
+
+    private function getNotFoundErrorMessage(UuidInterface $uuid): string
+    {
+        return self::ERROR_NOT_FOUND_MESSAGE;
     }
 }
