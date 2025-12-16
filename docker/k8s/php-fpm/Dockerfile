@@ -1,22 +1,35 @@
-FROM harbor.dev.tails.fun/tails-fun/base_php-fpm:0.0.2 AS build
+FROM php:8.4-fpm AS blabster-backend_php-fpm
+
+ARG TZ=Etc/UTC
+ARG PUID=1000
+ARG PGID=1000
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    unzip \
+    wget \
+    sqlite3 \
+    openssh-client \
+    libldap2-dev \
+    libzip-dev \
+    libssh2-1-dev \
+    libpng-dev \
+    libssh2-1 \
+    libicu-dev \
+    libsqlite3-dev \
     libmemcached-dev \
     zlib1g-dev \
     pkg-config \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && ln -s /usr/local/bin/php /usr/bin/php \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl gd pcntl zip pdo_sqlite \
+    && pecl install pcov memcached \
+    && docker-php-ext-enable pcov memcached
 
-COPY ../../../composer.* ./
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-interaction
-
-FROM harbor.dev.tails.fun/tails-fun/base_php-fpm:0.0.2
-
-COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html 
-COPY --chown=www-data:www-data . .
-
-USER www-data
-
-EXPOSE 9000
+RUN groupmod -o -g $PGID www-data \
+    && usermod -o -u $PUID -g www-data www-data \
+    && usermod -md /home/www-data www-data \
+    && mkdir -p /home/www-data/.composer \
+    && mkdir -p /home/www-data/.ssh \
+    && chown -R www-data:www-data /home/www-data
