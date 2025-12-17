@@ -7,6 +7,8 @@ namespace Blabster\Infrastructure\Enum;
 enum OpenApiOperationId: string
 {
     case AuthLogin = 'login';
+    case AuthLogout = 'logout';
+    case AuthLogoutAll = 'logoutAll';
     case AuthRefresh = 'refresh';
     case HealthCheck = 'checkHealth';
     case MessengerAccountGet = 'getMessengerAccount';

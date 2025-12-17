@@ -8,6 +8,10 @@ enum OpenApiSchemaDescription: string
 {
     case AuthLoginCommand = 'AuthLoginCommand';
     case AuthLoginCommandResult = 'AuthLoginCommandResult';
+    case AuthLogoutCommand = 'AuthLogoutCommand';
+    case AuthLogoutCommandResult = 'AuthLogoutCommandResult';
+    case AuthLogoutAllCommand = 'AuthLogoutAllCommand';
+    case AuthLogoutAllCommandResult = 'AuthLogoutAllCommandResult';
     case AuthRefreshCommand = 'AuthRefreshCommand';
     case AuthRefreshCommandResult = 'AuthRefreshCommandResult';
     case MessengerAccountQuery = 'MessengerAccountQuery';

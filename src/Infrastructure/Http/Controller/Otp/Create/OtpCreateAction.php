@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Controller\Otp;
+namespace Blabster\Infrastructure\Http\Controller\Otp\Create;
 
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;

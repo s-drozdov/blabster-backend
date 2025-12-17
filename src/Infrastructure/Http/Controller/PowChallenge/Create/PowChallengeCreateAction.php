@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Controller\PowChallenge;
+namespace Blabster\Infrastructure\Http\Controller\PowChallenge\Create;
 
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;

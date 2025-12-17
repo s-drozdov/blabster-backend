@@ -6,10 +6,12 @@ namespace Blabster\Infrastructure\Enum;
 
 enum Resource: string
 {
+    case HealthCheck = '/health-check';
     case Login = '/login';
+    case Logout = '/logout';
+    case LogoutAll = '/logout-all';
     case MessengerAccount = '/messenger-account';
     case Otp = '/otp';
-    case Refresh = '/refresh';
     case PowChallenge = '/pow-challenge';
-    case HealthCheck = '/health-check';
+    case Refresh = '/refresh';
 }

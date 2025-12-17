@@ -26,4 +26,6 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function getByEmailAndToken(string $email, string $refreshTokenValue): EntityInterface;
 
     public function save(User $entity): void;
+
+    public function update(User $entity): void;
 }

@@ -1,0 +1,5 @@
+Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommand:
+    properties:
+        email:
+            - NotBlank: ~
+            - Email: ~

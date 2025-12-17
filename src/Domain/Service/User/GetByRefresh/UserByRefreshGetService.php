@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Domain\Service\User\Refresh;
+namespace Blabster\Domain\Service\User\GetByRefresh;
 
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Service\ServiceInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
 
-final readonly class UserRefreshService implements ServiceInterface
+final readonly class UserByRefreshGetService implements ServiceInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,

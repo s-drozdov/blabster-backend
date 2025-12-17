@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\ValueResolver\Auth;
+namespace Blabster\Infrastructure\Http\ValueResolver\Auth\Logout;
 
 use Override;
+use Webmozart\Assert\Assert;
+use Blabster\Infrastructure\Enum\CookieKey;
 use Symfony\Component\HttpFoundation\Request;
+use Blabster\Infrastructure\Enum\RequestKey;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
+use Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommand;
 
 /**
- * @extends AbstractValueResolver<AuthLoginCommand>
+ * @extends AbstractValueResolver<AuthLogoutCommand>
  */
-final readonly class AuthLoginValueResolver extends AbstractValueResolver
+final readonly class AuthLogoutValueResolver extends AbstractValueResolver
 {
     public function __construct(
         private DenormalizerInterface $denormalizer,
@@ -27,15 +30,21 @@ final readonly class AuthLoginValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return AuthLoginCommand::class;
+        return AuthLogoutCommand::class;
     }
 
     #[Override]
     protected function createFromRequest(Request $request): CqrsElementInterface
     {
+        $refreshToken = $request->cookies->get(CookieKey::RefreshToken->value);
+        Assert::notEmpty($refreshToken);
+
         return $this->denormalizer->denormalize(
-            $request->toArray(), 
-            AuthLoginCommand::class,
+            array_merge(
+                $request->toArray(),
+                [RequestKey::RefreshTokenValue->value => $refreshToken],
+            ),
+            AuthLogoutCommand::class,
         );
     }
 }

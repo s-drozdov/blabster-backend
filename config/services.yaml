@@ -198,7 +198,7 @@ services:
 
 # controllers
 
-    Blabster\Infrastructure\Http\Controller\Auth\LoginAction:
+    Blabster\Infrastructure\Http\Controller\Auth\Login\LoginAction:
         arguments:
             $isCookieSecure: '%env(bool:COOKIE_WITH_SECURE)%'
 
@@ -219,3 +219,12 @@ services:
     Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand }
+
+    Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommand }
+    
+    Blabster\Application\UseCase\Command\Auth\LogoutAll\AuthLogoutAllCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\LogoutAll\AuthLogoutAllCommand }
+    
