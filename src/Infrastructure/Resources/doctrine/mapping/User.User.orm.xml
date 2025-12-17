@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Blabster\Domain\Entity\User\User" table="users">
+        <id name="uuid" type="uuid_binary" column="uuid">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="email" column="email" type="string" length="255" nullable="false"/>
+
+        <one-to-many
+            field="refreshTokenList"
+            target-entity="Blabster\Domain\Entity\User\RefreshToken"
+            mapped-by="user"
+            orphan-removal="true"
+        >
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-one
+            field="messenger_account"
+            target-entity="Blabster\Domain\Entity\User\MessengerAccount"
+            inversed-by="user"
+        >
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+            </cascade>
+
+            <join-column
+                name="messenger_account_uuid"
+                referenced-column-name="uuid"
+                nullable="true"
+                unique="true"
+            />
+        </one-to-one>
+
+        <field name="created_at" column="created_at" type="date_immutable" nullable="false"/>
+        
+        <indexes>
+            <index name="idx__users__email" columns="email"/>
+        </indexes>
+    </entity>
+</doctrine-mapping>

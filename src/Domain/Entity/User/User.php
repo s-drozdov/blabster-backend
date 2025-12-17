@@ -23,13 +23,14 @@ final class User implements UserInterface, AggregateInterface
     /** @var Collection<array-key,RefreshToken> $refreshTokenList */ 
     private Collection $refreshTokenList;
 
+    private ?MessengerAccount $messenger_account = null;
+
     public function __construct(
         private UuidInterface $uuid,
 
         /** @var non-empty-string $email */
         private string $email,
         
-        private ?MessengerAccount $messenger_account,
         private DateTimeImmutable $created_at,
     ) {
         $this->refreshTokenList = new ArrayCollection();
@@ -57,6 +58,13 @@ final class User implements UserInterface, AggregateInterface
     public function getMessengerAccount(): ?MessengerAccount
     {
         return $this->messenger_account;
+    }
+
+    public function setMessengerAccount(?MessengerAccount $messenger_account): self
+    {
+        $this->messenger_account = $messenger_account;
+
+        return $this;
     }
 
     public function getCreatedAt(): DateTimeImmutable

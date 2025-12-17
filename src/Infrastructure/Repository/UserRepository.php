@@ -8,9 +8,9 @@ use Override;
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Blabster\Domain\Entity\User\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
 use Blabster\Library\Helper\String\StringHelperInterface;
 
@@ -23,7 +23,7 @@ final class UserRepository extends EntityRepository implements UserRepositoryInt
     use DoctrinePersistable;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         private StringHelperInterface $stringHelper,
     ) {
         parent::__construct($entityManager, $entityManager->getClassMetadata(User::class));

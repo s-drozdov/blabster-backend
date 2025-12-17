@@ -24,7 +24,6 @@ final readonly class UserFactory implements FactoryInterface
         return new User(
             uuid: $this->uuidHelper->create(),
             email: $email,
-            messenger_account: null,
             created_at: new DateTimeImmutable(),
         );
     }

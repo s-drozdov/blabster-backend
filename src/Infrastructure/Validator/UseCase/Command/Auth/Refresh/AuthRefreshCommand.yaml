@@ -1,10 +1,5 @@
-Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand:
+Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand:
     properties:
         email:
             - NotBlank: ~
             - Email: ~
-        otp_uuid:
-            - NotBlank: ~
-            - Uuid: ~
-        otp_code:
-            - NotBlank: ~

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Blabster\Infrastructure\Repository;
 
 use Override;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Blabster\Domain\Entity\User\RefreshToken;
 use Blabster\Library\Helper\String\StringHelperInterface;
 use Blabster\Domain\Repository\RefreshTokenRepositoryInterface;
@@ -20,7 +20,7 @@ final class RefreshTokenRepository extends EntityRepository implements RefreshTo
     use DoctrinePersistable;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         private StringHelperInterface $stringHelper,
     ) {
         parent::__construct($entityManager, $entityManager->getClassMetadata(RefreshToken::class));

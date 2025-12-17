@@ -175,6 +175,10 @@ services:
         tags:
             - { name: 'serializer.normalizer', priority: 500 }
 
+    Blabster\Infrastructure\Serializer\Normalizer\UuidInterfaceNormalizer:
+        tags:
+            - { name: 'serializer.normalizer', priority: 500 }
+
 # denormalizers
     Blabster\Infrastructure\Serializer\Denormalizer\NullDenormalizer:
         tags:
@@ -207,3 +211,11 @@ services:
     Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommand }
+    
+    Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand }
+    
+    Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand }
