@@ -13,10 +13,10 @@ use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
-use Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommand;
+use Blabster\Application\UseCase\Command\User\Logout\UserLogoutCommand;
 
 /**
- * @extends AbstractValueResolver<AuthLogoutCommand>
+ * @extends AbstractValueResolver<UserLogoutCommand>
  */
 final readonly class AuthLogoutValueResolver extends AbstractValueResolver
 {
@@ -30,7 +30,7 @@ final readonly class AuthLogoutValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return AuthLogoutCommand::class;
+        return UserLogoutCommand::class;
     }
 
     #[Override]
@@ -44,7 +44,7 @@ final readonly class AuthLogoutValueResolver extends AbstractValueResolver
                 $request->toArray(),
                 [RequestKey::RefreshTokenValue->value => $refreshToken],
             ),
-            AuthLogoutCommand::class,
+            UserLogoutCommand::class,
         );
     }
 }

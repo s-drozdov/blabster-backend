@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Blabster\Application\Bus\Query;
+
+use Blabster\Application\Bus\CqrsBusInterface;
+use Blabster\Application\Bus\Query\QueryInterface;
+use Blabster\Application\Bus\Query\QueryResultInterface;
+
+/**
+ * @template TElement of QueryInterface
+ * @template TResult of QueryResultInterface
+ * 
+ * @extends CqrsBusInterface<TElement, TResult>
+ */
+interface QueryBusInterface extends CqrsBusInterface
+{
+    /*_*/
+}

@@ -4,7 +4,7 @@ security:
         app_user_provider:
             entity:
                 class: Blabster\Domain\Entity\User\User
-                property: uuid
+                property: email
     firewalls:
         login:
             pattern: ^/login
@@ -25,8 +25,11 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/health-check, roles: PUBLIC_ACCESS }
         - { path: ^/api/doc.json, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/logout-all, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

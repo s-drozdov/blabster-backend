@@ -6,9 +6,9 @@ namespace Blabster\Infrastructure\Bus;
 
 use Override;
 use Symfony\Component\Messenger\HandleTrait;
-use Blabster\Application\Bus\QueryBusInterface;
 use Blabster\Application\Bus\Query\QueryInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Blabster\Application\Bus\Query\QueryBusInterface;
 use Blabster\Application\Bus\Query\QueryResultInterface;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 

@@ -7,52 +7,12 @@ namespace Blabster\Library\Helper\String;
 use Override;
 
 use Webmozart\Assert\Assert;
-use function Symfony\Component\String\u;
 use Blabster\Library\Helper\String\StringHelperInterface;
 
 final readonly class StringHelper implements StringHelperInterface
 {
     private const string CACHE_SLUG_PATTERN = '%s.%s';
-
-    #[Override]
-    public function kebabToHumanReadable(string $source): string
-    {
-        return ucfirst(
-            (string) u($source)->replace('-', ' '),
-        );
-    }
-
-    #[Override]
-    public function snakeToHumanReadable(string $source): string
-    {
-        return ucfirst(
-            (string) u($source)->replace('_', ' '),
-        );
-    }
-
-    #[Override]
-    public function snakeToPascal(string $source): string
-    {
-        return implode(
-            '',
-            array_map(
-                fn (string $word) => ucfirst($word),
-                explode('_', $source),
-            ),
-        );
-    }
-
-    #[Override]
-    public function nestedToSquareBrackets(string $source): string
-    {
-        $levelList = explode('.', $source);
-
-        return array_reduce(
-            $levelList,
-            fn (string $acc, string $cur) => $acc . sprintf('[%s]', $cur),
-            '',
-        );
-    }
+    private const string PASSWORD_DEFAULT_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
     #[Override]
     public function getClassShortName(string|object $class): string
@@ -73,5 +33,26 @@ final readonly class StringHelper implements StringHelperInterface
             $this->getClassShortName($class),
             $slug,
         );
+    }
+
+    #[Override]
+    public function getLocalPartFromEmail(string $email): string
+    {
+        return current(explode('@', $email, 2));
+    }
+
+    #[Override]
+    public function generateMessengerPassword(int $length, string $symbols): string
+    {
+        $chars = self::PASSWORD_DEFAULT_ALPHABET . $symbols;
+        $password = '';
+
+        $maxIndex = strlen($chars) - 1;
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[random_int(0, $maxIndex)];
+        }
+
+        return $password;
     }
 }

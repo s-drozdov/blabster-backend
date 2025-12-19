@@ -7,13 +7,13 @@ namespace Blabster\Infrastructure\Http\ValueResolver\Auth\Login;
 use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand;
+use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
 
 /**
- * @extends AbstractValueResolver<AuthLoginCommand>
+ * @extends AbstractValueResolver<UserLoginCommand>
  */
 final readonly class AuthLoginValueResolver extends AbstractValueResolver
 {
@@ -27,7 +27,7 @@ final readonly class AuthLoginValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return AuthLoginCommand::class;
+        return UserLoginCommand::class;
     }
 
     #[Override]
@@ -35,7 +35,7 @@ final readonly class AuthLoginValueResolver extends AbstractValueResolver
     {
         return $this->denormalizer->denormalize(
             $request->toArray(), 
-            AuthLoginCommand::class,
+            UserLoginCommand::class,
         );
     }
 }

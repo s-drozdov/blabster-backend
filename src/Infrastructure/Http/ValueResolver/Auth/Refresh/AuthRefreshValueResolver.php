@@ -13,10 +13,10 @@ use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
-use Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
 
 /**
- * @extends AbstractValueResolver<AuthRefreshCommand>
+ * @extends AbstractValueResolver<UserRefreshCommand>
  */
 final readonly class AuthRefreshValueResolver extends AbstractValueResolver
 {
@@ -30,7 +30,7 @@ final readonly class AuthRefreshValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return AuthRefreshCommand::class;
+        return UserRefreshCommand::class;
     }
 
     #[Override]
@@ -44,7 +44,7 @@ final readonly class AuthRefreshValueResolver extends AbstractValueResolver
                 $request->toArray(),
                 [RequestKey::RefreshTokenValue->value => $refreshToken],
             ),
-            AuthRefreshCommand::class,
+            UserRefreshCommand::class,
         );
     }
 }

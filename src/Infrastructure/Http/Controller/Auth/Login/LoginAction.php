@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Blabster\Infrastructure\Enum\OpenApiSummary;
-use Blabster\Application\Bus\CommandBusInterface;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blabster\Infrastructure\Enum\OpenApiOperationId;
 use Blabster\Library\Enum\SerializationContextParam;
@@ -24,10 +24,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
-use Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand;
-use Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommandResult;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\Auth\Login\AuthLoginCommand as AuthLoginCommandSchema;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\Auth\Login\AuthLoginCommandResult as AuthLoginCommandResultSchema;
+use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
+use Blabster\Application\UseCase\Command\User\Login\UserLoginCommandResult;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Login\UserLoginCommand as UserLoginCommandSchema;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Login\UserLoginCommandResult as UserLoginCommandResultSchema;
 
 #[AsController]
 #[Route(Action::auth_login->value, name: Action::auth_login->name, methods: [Request::METHOD_POST])]
@@ -35,7 +35,7 @@ final class LoginAction
 {
     public function __construct(
 
-        /** @var CommandBusInterface<AuthLoginCommand,AuthLoginCommandResult> */
+        /** @var CommandBusInterface<UserLoginCommand,UserLoginCommandResult> */
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
@@ -51,24 +51,24 @@ final class LoginAction
         tags: [OpenApiTag::Auth->value],
         requestBody: new OA\RequestBody(
             required: true,
-            description: OpenApiSchemaDescription::AuthLoginCommand->value,
+            description: OpenApiSchemaDescription::UserLoginCommand->value,
             content: new OA\JsonContent(
-                ref: new Model(type: AuthLoginCommandSchema::class),
+                ref: new Model(type: UserLoginCommandSchema::class),
             ),
         ),
         responses: [
             new OA\Response(
                 response: Response::HTTP_OK,
-                description: OpenApiSchemaDescription::AuthLoginCommandResult->value,
+                description: OpenApiSchemaDescription::UserLoginCommandResult->value,
                 content: new OA\JsonContent(
-                    ref: new Model(type: AuthLoginCommandResultSchema::class),
+                    ref: new Model(type: UserLoginCommandResultSchema::class),
                 ),
             ),
         ],
     )]
-    public function __invoke(AuthLoginCommand $command): Response
+    public function __invoke(UserLoginCommand $command): Response
     {
-        /** @var AuthLoginCommandResult $result */
+        /** @var UserLoginCommandResult $result */
         $result = $this->commandBus->execute($command);
 
         $response = JsonResponse::fromJsonString(

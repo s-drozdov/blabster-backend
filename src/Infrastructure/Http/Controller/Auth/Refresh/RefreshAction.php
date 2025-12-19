@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Blabster\Infrastructure\Enum\OpenApiSummary;
-use Blabster\Application\Bus\CommandBusInterface;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blabster\Infrastructure\Enum\OpenApiOperationId;
 use Blabster\Library\Enum\SerializationContextParam;
@@ -20,10 +20,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
-use Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand;
-use Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommandResult;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\Auth\Refresh\AuthRefreshCommand as AuthRefreshCommandSchema;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\Auth\Refresh\AuthRefreshCommandResult as AuthRefreshCommandResultSchema;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandResult;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Refresh\UserRefreshCommand as UserRefreshCommandSchema;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Refresh\UserRefreshCommandResult as UserRefreshCommandResultSchema;
 
 #[AsController]
 #[Route(Action::auth_refresh->value, name: Action::auth_refresh->name, methods: [Request::METHOD_POST])]
@@ -31,7 +31,7 @@ final class RefreshAction
 {
     public function __construct(
 
-        /** @var CommandBusInterface<AuthRefreshCommand,AuthRefreshCommandResult> */
+        /** @var CommandBusInterface<UserRefreshCommand,UserRefreshCommandResult> */
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
@@ -46,22 +46,22 @@ final class RefreshAction
         tags: [OpenApiTag::Auth->value],
         requestBody: new OA\RequestBody(
             required: true,
-            description: OpenApiSchemaDescription::AuthRefreshCommand->value,
+            description: OpenApiSchemaDescription::UserRefreshCommand->value,
             content: new OA\JsonContent(
-                ref: new Model(type: AuthRefreshCommandSchema::class),
+                ref: new Model(type: UserRefreshCommandSchema::class),
             ),
         ),
         responses: [
             new OA\Response(
                 response: Response::HTTP_OK,
-                description: OpenApiSchemaDescription::AuthRefreshCommandResult->value,
+                description: OpenApiSchemaDescription::UserRefreshCommandResult->value,
                 content: new OA\JsonContent(
-                    ref: new Model(type: AuthRefreshCommandResultSchema::class),
+                    ref: new Model(type: UserRefreshCommandResultSchema::class),
                 ),
             ),
         ],
     )]
-    public function __invoke(AuthRefreshCommand $command): Response
+    public function __invoke(UserRefreshCommand $command): Response
     {
         return JsonResponse::fromJsonString(
             $this->serializer->serialize(

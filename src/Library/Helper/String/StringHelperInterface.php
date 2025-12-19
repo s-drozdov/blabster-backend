@@ -8,14 +8,6 @@ use Blabster\Library\Helper\HelperInterface;
 
 interface StringHelperInterface extends HelperInterface
 {
-    public function kebabToHumanReadable(string $source): string;
-
-    public function snakeToHumanReadable(string $source): string;
-
-    public function snakeToPascal(string $source): string;
-
-    public function nestedToSquareBrackets(string $source): string;
-
     /**
      * @param class-string|object $class
      */
@@ -25,4 +17,8 @@ interface StringHelperInterface extends HelperInterface
      * @param class-string|object $class
      */
     public function getSlugForClass(string $slug, string|object $class): string;
+
+    public function getLocalPartFromEmail(string $email): string;
+
+    public function generateMessengerPassword(int $length, string $symbols): string;
 }

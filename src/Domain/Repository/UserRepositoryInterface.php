@@ -7,6 +7,7 @@ namespace Blabster\Domain\Repository;
 use InvalidArgumentException;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Entity\EntityInterface;
+use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Domain\Repository\RepositoryInterface;
 
 /**
@@ -14,6 +15,13 @@ use Blabster\Domain\Repository\RepositoryInterface;
  */
 interface UserRepositoryInterface extends RepositoryInterface
 {
+
+    /**
+     * @return User
+     * @throws InvalidArgumentException
+     */
+    public function getByUuid(UuidInterface $uuid): EntityInterface;
+
     /**
      * @return User|null
      */

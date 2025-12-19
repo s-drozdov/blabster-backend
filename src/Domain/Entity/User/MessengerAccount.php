@@ -14,7 +14,7 @@ final readonly class MessengerAccount implements EntityInterface
     public function __construct(
         private UuidInterface $uuid,
         private User $user,
-        private string $account_ext_id,
+        private string $login,
         private string $password,
         private string $host,
     ) {
@@ -32,9 +32,9 @@ final readonly class MessengerAccount implements EntityInterface
         return $this->user;
     }
 
-    public function getAccountExtId(): string
+    public function getLogin(): string
     {
-        return $this->account_ext_id;
+        return $this->login;
     }
 
     public function getPassword(): string

@@ -6,14 +6,14 @@ namespace Blabster\Infrastructure\Enum;
 
 enum OpenApiSchemaDescription: string
 {
-    case AuthLoginCommand = 'AuthLoginCommand';
-    case AuthLoginCommandResult = 'AuthLoginCommandResult';
-    case AuthLogoutCommand = 'AuthLogoutCommand';
-    case AuthLogoutCommandResult = 'AuthLogoutCommandResult';
-    case AuthLogoutAllCommand = 'AuthLogoutAllCommand';
-    case AuthLogoutAllCommandResult = 'AuthLogoutAllCommandResult';
-    case AuthRefreshCommand = 'AuthRefreshCommand';
-    case AuthRefreshCommandResult = 'AuthRefreshCommandResult';
+    case UserLoginCommand = 'UserLoginCommand';
+    case UserLoginCommandResult = 'UserLoginCommandResult';
+    case UserLogoutCommand = 'UserLogoutCommand';
+    case UserLogoutCommandResult = 'UserLogoutCommandResult';
+    case UserLogoutAllCommand = 'UserLogoutAllCommand';
+    case UserLogoutAllCommandResult = 'UserLogoutAllCommandResult';
+    case UserRefreshCommand = 'UserRefreshCommand';
+    case UserRefreshCommandResult = 'UserRefreshCommandResult';
     case MessengerAccountQuery = 'MessengerAccountQuery';
     case MessengerAccountQueryResult = 'MessengerAccountQueryResult';
     case OtpCreateCommand = 'OtpCreateCommand';

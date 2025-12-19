@@ -7,7 +7,7 @@ namespace Blabster\Domain\Service\RefreshToken\Create;
 use Blabster\Domain\Entity\User\RefreshToken;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Service\ServiceInterface;
-use Blabster\Domain\Factory\RefreshTokenFactory;
+use Blabster\Domain\Factory\User\RefreshTokenFactory;
 use Blabster\Domain\Repository\RefreshTokenRepositoryInterface;
 
 final readonly class RefreshTokenCreateService implements ServiceInterface

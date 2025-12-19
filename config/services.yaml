@@ -19,6 +19,12 @@ services:
             - '../src/Entity/'
             - '../src/Infrastructure/Kernel.php'
     
+    _instanceof:
+        Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver:
+            tags: ['controller.argument_value_resolver']
+        Blabster\Application\Bus\Event\EventHandlerInterface:
+            tags: ['messenger.message_handler']
+    
     Nyholm\Psr7\Factory\Psr17Factory:
         class: Nyholm\Psr7\Factory\Psr17Factory
 
@@ -70,7 +76,7 @@ services:
         arguments:
             $ttlSeconds: '%env(FINGERPRINT_TTL)%'
 
-    Blabster\Domain\Factory\RefreshTokenFactory:
+    Blabster\Domain\Factory\User\RefreshTokenFactory:
         arguments:
             $expirationPeriod: '%env(REFRESH_TOKEN_EXPIRATION_PERIOD)%'
 
@@ -107,13 +113,14 @@ services:
     Blabster\Application\Dto\Converter\PaginationResultToDtoConverter: ~
 
 # buses
-    Blabster\Infrastructure\Bus\CommandBusInterface:
+
+    Blabster\Application\Bus\Command\CommandBusInterface:
         class: Blabster\Infrastructure\Bus\CommandBus
 
-    Blabster\Infrastructure\Bus\EventBusInterface:
+    Blabster\Application\Bus\Event\EventBusInterface:
         class: Blabster\Infrastructure\Bus\EventBus
 
-    Blabster\Infrastructure\Bus\QueryBusInterface:
+    Blabster\Application\Bus\Query\QueryBusInterface:
         class: Blabster\Infrastructure\Bus\QueryBus
 
 # application services
@@ -130,25 +137,27 @@ services:
             
         
 # library
+
     Blabster\Library\Generator\PageGeneratorInterface:
         class: Blabster\Library\Generator\PageGenerator
 
 # SDK
 
-    Blabster\Library\SDK\Turnsnile\TurnsnileSdk:
+    Blabster\Library\SDK\Turnstile\TurnstileSdk:
         arguments:
             $apiUrl: '%env(TURNSTILE_API_URL)%'
             $apiSecret: '%env(TURNSTILE_API_SECRET)%'
+
+    Blabster\Library\SDK\Ejabberd\EjabberdSdk:
+        arguments:
+            $apiUrl: '%env(EJABBERD_API_URL)%'
+            $apiBasicLogin: '%env(EJABBERD_API_BASIC_LOGIN)%'
+            $apiBasicPassword: '%env(EJABBERD_API_BASIC_PASSWORD)%'
         
 # helpers
-    Blabster\Library\Helper\Array\ArrayHelperInterface:
-        class: Blabster\Library\Helper\Array\ArrayHelper
 
     Blabster\Library\Helper\DateTime\DateTimeHelperInterface:
         class: Blabster\Library\Helper\DateTime\DateTimeHelper
-
-    Blabster\Library\Helper\Reflection\ReflectionHelperInterface:
-        class: Blabster\Library\Helper\Reflection\ReflectionHelper
 
     Blabster\Library\Helper\String\StringHelperInterface:
         class: Blabster\Library\Helper\String\StringHelper
@@ -157,12 +166,14 @@ services:
         class: Blabster\Library\Helper\Uuid\RamseyUuidHelper
 
 # providers
+
     # Blabster\Library\Provider\Cache\CacheProviderInterface:
     #     class: Blabster\Library\Provider\Cache\CacheProvider
     #     arguments:
     #         $servicePrefix: '%env(APP_NAME)%'
 
 # normalizers
+
     Blabster\Infrastructure\Serializer\Normalizer\ListInterfaceNormalizer:
         tags:
             - { name: 'serializer.normalizer', priority: 500 }
@@ -180,16 +191,13 @@ services:
             - { name: 'serializer.normalizer', priority: 500 }
 
 # denormalizers
+
     Blabster\Infrastructure\Serializer\Denormalizer\NullDenormalizer:
         tags:
             - { name: 'serializer.denormalizer', priority: 500 }
-    
-# value resolvers
-    _instanceof:
-        Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver:
-            tags: ['controller.argument_value_resolver']
 
 # event subscribers
+
     Blabster\Infrastructure\Event\Subscriber\Exception\ExceptionSubscriber:
         tags: ['kernel.event_subscriber']
 
@@ -202,6 +210,18 @@ services:
         arguments:
             $isCookieSecure: '%env(bool:COOKIE_WITH_SECURE)%'
 
+# event handlers
+
+    Blabster\Application\EventHandler\User\Created\RegisterMessengerAccount:
+        arguments:
+            $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
+
+    Blabster\Application\EventHandler\MessengerAccount\Registered\AddContactToRoaster:
+        arguments:
+            $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
+            $requiredContactLogin: '%env(MESSENGER_REQUIRED_CONTACT_LOGIN)%'
+            $requiredContactNickname: '%env(MESSENGER_REQUIRED_CONTACT_NICKNAME)%'
+
 # bus handlers
 
     Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler:
@@ -212,19 +232,19 @@ services:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommand }
     
-    Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommandHandler:
+    Blabster\Application\UseCase\Command\User\Login\UserLoginCommandHandler:
         tags:
-            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand }
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\User\Login\UserLoginCommand }
     
-    Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommandHandler:
+    Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandHandler:
         tags:
-            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Refresh\AuthRefreshCommand }
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand }
 
-    Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommandHandler:
+    Blabster\Application\UseCase\Command\User\Logout\UserLogoutCommandHandler:
         tags:
-            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\Logout\AuthLogoutCommand }
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\User\Logout\UserLogoutCommand }
     
-    Blabster\Application\UseCase\Command\Auth\LogoutAll\AuthLogoutAllCommandHandler:
+    Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandHandler:
         tags:
-            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Auth\LogoutAll\AuthLogoutAllCommand }
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand }
     

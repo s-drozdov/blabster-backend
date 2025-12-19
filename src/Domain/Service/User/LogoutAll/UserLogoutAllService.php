@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Service\User\LogoutAll;
 
+use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Service\ServiceInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
 
@@ -15,11 +16,13 @@ final readonly class UserLogoutAllService implements ServiceInterface
         /*_*/
     }
 
-    public function perform(string $email, string $refreshTokenValue): void
+    public function perform(string $email, string $refreshTokenValue): User
     {
         $user = $this->userRepository->getByEmailAndToken($email, $refreshTokenValue);
 
         $user->getRefreshTokenList()->clear();
         $this->userRepository->update($user);
+
+        return $user;
     }
 }

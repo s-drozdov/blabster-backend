@@ -9,7 +9,7 @@
             <generator strategy="NONE"/>
         </id>
 
-        <field name="email" column="email" type="string" length="255" nullable="false"/>
+        <field name="email" column="email" type="string" length="255" nullable="false" unique="true"/>
 
         <one-to-many
             field="refreshTokenList"

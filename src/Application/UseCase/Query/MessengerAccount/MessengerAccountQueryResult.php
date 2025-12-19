@@ -11,6 +11,7 @@ final readonly class MessengerAccountQueryResult implements QueryResultInterface
     public function __construct(
         public string $login,
         public string $password,
+        public string $host,
     ) {
         /*_*/
     }

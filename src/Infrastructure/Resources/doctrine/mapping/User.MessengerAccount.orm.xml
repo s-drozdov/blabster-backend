@@ -15,7 +15,7 @@
             mapped-by="messenger_account"
         />
 
-        <field name="account_ext_id" column="account_ext_id" type="string" length="255" nullable="false"/>
+        <field name="login" column="login" type="string" length="255" nullable="false"/>
 
         <field name="password" column="password" type="string" length="255" nullable="false"/>
 

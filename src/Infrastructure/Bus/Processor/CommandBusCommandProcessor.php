@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Bus\Processor;
 
-use Blabster\Application\Bus\CommandBusInterface;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Blabster\Application\Bus\Command\CommandInterface;
 use Blabster\Application\Bus\Command\CommandResultInterface;

@@ -6,7 +6,7 @@ namespace Blabster\Infrastructure\Bus;
 
 use Override;
 use Symfony\Component\Messenger\HandleTrait;
-use Blabster\Application\Bus\CommandBusInterface;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Blabster\Application\Bus\Command\CommandInterface;
 use Blabster\Application\Bus\Command\CommandResultInterface;

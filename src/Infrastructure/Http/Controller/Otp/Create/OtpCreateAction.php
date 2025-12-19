@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Blabster\Infrastructure\Enum\OpenApiSummary;
-use Blabster\Application\Bus\CommandBusInterface;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blabster\Infrastructure\Enum\OpenApiOperationId;
 use Blabster\Library\Enum\SerializationContextParam;

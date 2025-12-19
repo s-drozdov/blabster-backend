@@ -6,9 +6,9 @@ namespace Blabster\Infrastructure\Bus;
 
 use Override;
 use Blabster\Domain\Event\EventInterface;
-use Blabster\Domain\Bus\EventBusInterface;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Blabster\Application\Bus\Event\EventBusInterface;
 
 final class EventBus implements EventBusInterface
 {

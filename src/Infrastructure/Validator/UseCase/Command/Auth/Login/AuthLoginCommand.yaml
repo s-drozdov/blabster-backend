@@ -1,4 +1,4 @@
-Blabster\Application\UseCase\Command\Auth\Login\AuthLoginCommand:
+Blabster\Application\UseCase\Command\User\Login\UserLoginCommand:
     properties:
         email:
             - NotBlank: ~
