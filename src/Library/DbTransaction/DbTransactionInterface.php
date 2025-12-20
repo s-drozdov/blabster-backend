@@ -20,9 +20,12 @@ interface DbTransactionInterface
     public function rollback(): void;
 
     /**
-     * @param callable(): void $callback
+     * @template T
      * 
+     * @param callable(): T $callback
+     * 
+     * @return T
      * @throws Throwable
      */
-    public function execute(callable $callback): void;
+    public function execute(callable $callback): mixed;
 }

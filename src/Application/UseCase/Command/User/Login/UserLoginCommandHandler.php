@@ -17,6 +17,7 @@ use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Blabster\Domain\Service\RefreshToken\Create\RefreshTokenCreateService;
 use Blabster\Application\UseCase\Command\User\Login\UserLoginCommandResult;
+use Blabster\Library\DbTransaction\DbTransactionInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 /**
@@ -31,6 +32,7 @@ final readonly class UserLoginCommandHandler implements CommandHandlerInterface
         private UserByEmailGetService $userByEmailGetService,
         private UserCreateService $userCreateService,
         private EventBusInterface $eventBus,
+        private DbTransactionInterface $dbTransaction,
     ) {
         /*_*/
     }
@@ -38,16 +40,18 @@ final readonly class UserLoginCommandHandler implements CommandHandlerInterface
     #[Override]
     public function __invoke(CqrsElementInterface $command): UserLoginCommandResult
     {
-        $this->guardOtp($command);
-        $user = $this->getUser($command);
+        return $this->dbTransaction->execute(function () use ($command) {
+            $this->guardOtp($command);
+            $user = $this->getUser($command);
 
-        $refreshToken = $this->refreshTokenCreateService->perform($user);
+            $refreshToken = $this->refreshTokenCreateService->perform($user);
 
-        return new UserLoginCommandResult(
-            access_token: $this->jwtManager->create($user),
-            refresh_token_value: $refreshToken->getValue(),
-            refresh_token_expires_at: $refreshToken->getExpiresAt(),
-        );
+            return new UserLoginCommandResult(
+                access_token: $this->jwtManager->create($user),
+                refresh_token_value: $refreshToken->getValue(),
+                refresh_token_expires_at: $refreshToken->getExpiresAt(),
+            );
+        });
     }
 
     private function guardOtp(UserLoginCommand $command): void
