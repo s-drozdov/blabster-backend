@@ -6,19 +6,29 @@ namespace Blabster\Library\DbTransaction;
 
 use Override;
 use Throwable;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Blabster\Library\DbTransaction\Enum\IsolationLevel;
+use Doctrine\DBAL\TransactionIsolationLevel;
 
 final readonly class DoctrineDbTransaction implements DbTransactionInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private Connection $connection,
     ) {
         /*_*/
     }
 
     #[Override]
-    public function start(?string $isolationLevel = null): void
+    public function start(?IsolationLevel $isolationLevel = null): void
     {
+        if ($isolationLevel !== null) {
+            $this->connection->setTransactionIsolation(
+                $this->getDoctrineIsolationLevel($isolationLevel),
+            );
+        }
+
         $this->entityManager->beginTransaction();
     }
 
@@ -43,12 +53,22 @@ final readonly class DoctrineDbTransaction implements DbTransactionInterface
             $result = $callback();
 
             $this->commit();
-
-            return $result;
         } catch (Throwable $e) {
             $this->rollback();
 
             throw $e;
         }
+
+        return $result;
+    }
+
+    private function getDoctrineIsolationLevel(IsolationLevel $isolationLevel): TransactionIsolationLevel
+    {
+        return match ($isolationLevel) {
+            IsolationLevel::READ_UNCOMMITTED => TransactionIsolationLevel::READ_UNCOMMITTED,
+            IsolationLevel::READ_COMMITTED => TransactionIsolationLevel::READ_COMMITTED,
+            IsolationLevel::REPEATABLE_READ => TransactionIsolationLevel::REPEATABLE_READ,
+            IsolationLevel::SERIALIZABLE => TransactionIsolationLevel::SERIALIZABLE,
+        };
     }
 }
