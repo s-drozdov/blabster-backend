@@ -7,7 +7,7 @@ namespace Blabster\Infrastructure\Repository;
 use Blabster\Domain\Entity\Fingerprint;
 use Psr\SimpleCache\CacheInterface;
 use Blabster\Domain\Repository\FingerprintRepositoryInterface;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 use Override;
 
 final class FingerprintRepository implements FingerprintRepositoryInterface

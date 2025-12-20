@@ -9,7 +9,7 @@ use Blabster\Domain\Entity\Otp;
 use Psr\SimpleCache\CacheInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Domain\Repository\OtpRepositoryInterface;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 
 final class OtpRepository implements OtpRepositoryInterface
 {

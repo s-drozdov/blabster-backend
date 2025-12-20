@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Blabster\Domain\Factory;
 
 use Blabster\Domain\Entity\Fingerprint;
-use Blabster\Library\Helper\DateTime\DateTimeHelperInterface;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\DateTime\DateTimeHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
 final readonly class FingerprintFactory implements FactoryInterface
 {

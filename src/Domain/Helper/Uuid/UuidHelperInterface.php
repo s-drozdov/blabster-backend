@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\Uuid;
+namespace Blabster\Domain\Helper\Uuid;
 
-use Blabster\Library\Helper\HelperInterface;
+use Blabster\Domain\Helper\HelperInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 
 interface UuidHelperInterface extends HelperInterface

@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Event\User\UserCreated;
 use Blabster\Domain\Factory\FactoryInterface;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
 final readonly class UserFactory implements FactoryInterface
 {

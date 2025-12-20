@@ -8,7 +8,7 @@ use Override;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Blabster\Domain\Entity\User\RefreshToken;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 use Blabster\Domain\Repository\RefreshTokenRepositoryInterface;
 
 /**

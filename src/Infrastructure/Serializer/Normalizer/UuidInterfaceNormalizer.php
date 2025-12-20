@@ -7,7 +7,7 @@ namespace Blabster\Infrastructure\Serializer\Normalizer;
 use Override;
 use LogicException;
 use Blabster\Domain\ValueObject\UuidInterface;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 

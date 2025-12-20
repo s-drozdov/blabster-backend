@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\Uuid;
+namespace Blabster\Infrastructure\Helper\Uuid;
 
 use Override;
 
 use Ramsey\Uuid\Uuid;
 use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Infrastructure\Adapter\RamseyAdapter;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
 final readonly class RamseyUuidHelper implements UuidHelperInterface
 {

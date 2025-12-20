@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
 use Blabster\Domain\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 
 /**
  * @extends EntityRepository<User>

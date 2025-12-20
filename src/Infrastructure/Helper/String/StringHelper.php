@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\String;
+namespace Blabster\Infrastructure\Helper\String;
 
 use Override;
 
 use Webmozart\Assert\Assert;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 
 final readonly class StringHelper implements StringHelperInterface
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Blabster\Domain\Factory;
 
 use Blabster\Domain\Entity\Otp;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
 final readonly class OtpFactory implements FactoryInterface
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\String;
+namespace Blabster\Domain\Helper\String;
 
-use Blabster\Library\Helper\HelperInterface;
+use Blabster\Domain\Helper\HelperInterface;
 
 interface StringHelperInterface extends HelperInterface
 {

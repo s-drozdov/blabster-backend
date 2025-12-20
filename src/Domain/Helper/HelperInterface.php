@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper;
+namespace Blabster\Domain\Helper;
 
 interface HelperInterface
 {

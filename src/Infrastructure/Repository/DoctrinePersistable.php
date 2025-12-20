@@ -14,7 +14,7 @@ use Blabster\Library\Collection\Collection;
 use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Library\Collection\ListInterface;
 use Blabster\Domain\Repository\RepositoryInterface;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 
 /**
  * @template T of EntityInterface

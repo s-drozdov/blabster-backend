@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\DateTime;
+namespace Blabster\Infrastructure\Helper\DateTime;
 
+use Override;
 use DateInterval;
 use DateTimeImmutable;
-use Override;
 use Webmozart\Assert\Assert;
+use Blabster\Domain\Helper\DateTime\DateTimeHelperInterface;
 
 final readonly class DateTimeHelper implements DateTimeHelperInterface
 {

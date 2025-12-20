@@ -7,7 +7,7 @@ namespace Blabster\Infrastructure\Repository;
 use Override;
 use Psr\SimpleCache\CacheInterface;
 use Blabster\Domain\Entity\PowChallenge;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 use Blabster\Domain\Repository\PowChallengeRepositoryInterface;
 
 final class PowChallengeRepository implements PowChallengeRepositoryInterface

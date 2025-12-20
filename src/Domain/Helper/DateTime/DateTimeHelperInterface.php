@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Helper\DateTime;
+namespace Blabster\Domain\Helper\DateTime;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Blabster\Library\Helper\HelperInterface;
+use Blabster\Domain\Helper\HelperInterface;
 
 interface DateTimeHelperInterface extends HelperInterface
 {

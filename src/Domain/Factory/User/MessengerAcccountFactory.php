@@ -7,7 +7,7 @@ namespace Blabster\Domain\Factory\User;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Factory\FactoryInterface;
 use Blabster\Domain\Entity\User\MessengerAccount;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 use Blabster\Domain\Event\User\MessengerAccountRegistered;
 
 final readonly class MessengerAcccountFactory implements FactoryInterface

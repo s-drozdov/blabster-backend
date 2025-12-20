@@ -156,14 +156,14 @@ services:
         
 # helpers
 
-    Blabster\Library\Helper\DateTime\DateTimeHelperInterface:
-        class: Blabster\Library\Helper\DateTime\DateTimeHelper
+    Blabster\Domain\Helper\DateTime\DateTimeHelperInterface:
+        class: Blabster\Infrastructure\Helper\DateTime\DateTimeHelper
 
-    Blabster\Library\Helper\String\StringHelperInterface:
-        class: Blabster\Library\Helper\String\StringHelper
+    Blabster\Domain\Helper\String\StringHelperInterface:
+        class: Blabster\Infrastructure\Helper\String\StringHelper
 
-    Blabster\Library\Helper\Uuid\UuidHelperInterface:
-        class: Blabster\Library\Helper\Uuid\RamseyUuidHelper
+    Blabster\Domain\Helper\Uuid\UuidHelperInterface:
+        class: Blabster\Infrastructure\Helper\Uuid\RamseyUuidHelper
 
 # providers
 

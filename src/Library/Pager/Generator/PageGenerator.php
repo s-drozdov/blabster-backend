@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Library\Generator;
+namespace Blabster\Library\Pager\Generator;
 
-use Generator;
 use Override;
-use Blabster\Domain\Repository\Filter\Pager;
-use Blabster\Domain\Repository\Filter\PagerInterface;
-use Blabster\Library\Generator\PageGeneratorInterface;
+use Generator;
+use Blabster\Library\Pager\Pager;
+use Blabster\Library\Pager\PagerInterface;
 
 final class PageGenerator implements PageGeneratorInterface
 {

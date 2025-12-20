@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Entity\User\RefreshToken;
 use Blabster\Domain\Factory\FactoryInterface;
-use Blabster\Library\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
 final readonly class RefreshTokenFactory implements FactoryInterface
 {

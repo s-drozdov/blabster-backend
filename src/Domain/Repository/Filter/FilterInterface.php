@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Repository\Filter;
 
-use Blabster\Domain\Repository\Filter\PagerInterface;
+use Blabster\Library\Pager\PagerInterface;
 
 interface FilterInterface
 {

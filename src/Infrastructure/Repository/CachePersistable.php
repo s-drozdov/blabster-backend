@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Domain\Repository\RepositoryInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
-use Blabster\Library\Helper\String\StringHelperInterface;
+use Blabster\Domain\Helper\String\StringHelperInterface;
 
 /**
  * @template T of EntityInterface
