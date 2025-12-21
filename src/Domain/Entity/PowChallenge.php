@@ -8,7 +8,10 @@ use Override;
 use DateTimeImmutable;
 use Blabster\Domain\ValueObject\UuidInterface;
 
-final readonly class PowChallenge implements EntityInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+readonly class PowChallenge implements EntityInterface
 {
     public function __construct(
         private UuidInterface $uuid,
@@ -41,7 +44,7 @@ final readonly class PowChallenge implements EntityInterface
         return $this->difficulty;
     }
 
-    public function getExpiredAt(): ?DateTimeImmutable
+    public function getExpiresAt(): ?DateTimeImmutable
     {
         return $this->expires_at;
     }

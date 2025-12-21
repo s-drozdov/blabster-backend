@@ -16,7 +16,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Blabster\Domain\Entity\User\MessengerAccount;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class User implements UserInterface, AggregateInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+class User implements UserInterface, AggregateInterface
 {
     use Eventable;
 

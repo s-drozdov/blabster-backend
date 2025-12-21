@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Blabster\Library\SDK\Turnstile;
 
+use Override;
 use Webmozart\Assert\Assert;
-use InvalidArgumentException;
 use Psr\Http\Client\ClientInterface;
 use Blabster\Library\SDK\SdkInterface;
 use Psr\Http\Message\RequestInterface;
@@ -14,10 +14,10 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Blabster\Library\SDK\Turnstile\Response\TurnstileResultDto;
 use Symfony\Component\Serializer\SerializerInterface;
+use Blabster\Library\SDK\Turnstile\Response\TurnstileResultDto;
 
-final class TurnstileSdk implements SdkInterface
+final class TurnstileSdk implements TurnstileSdkInterface
 {
     public function __construct(
         private ClientInterface $client,
@@ -30,9 +30,7 @@ final class TurnstileSdk implements SdkInterface
         /*_*/
     }
     
-    /**
-     * @throws InvalidArgumentException
-     */
+    #[Override]
     public function getResult(string $turnsnileToken, ?string $clientRemoteIp = null): TurnstileResultDto
     {
         $response = $this->client->sendRequest(

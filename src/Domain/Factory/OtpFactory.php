@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Factory;
 
+use Override;
 use Blabster\Domain\Entity\Otp;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
-final readonly class OtpFactory implements FactoryInterface
+final readonly class OtpFactory implements OtpFactoryInterface
 {
     public function __construct(
         private UuidHelperInterface $uuidHelper,
@@ -15,6 +16,7 @@ final readonly class OtpFactory implements FactoryInterface
         /*_*/
     }
 
+    #[Override]
     public function create(string $email): Otp
     {
         return new Otp(

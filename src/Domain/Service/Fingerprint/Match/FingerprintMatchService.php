@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Service\Fingerprint\Match;
 
-use InvalidArgumentException;
+use Override;
 use Blabster\Domain\Entity\Fingerprint;
-use Blabster\Domain\Factory\FingerprintFactory;
-use Blabster\Domain\Service\ServiceInterface;
+use Blabster\Domain\Factory\FingerprintFactoryInterface;
 use Blabster\Domain\Repository\FingerprintRepositoryInterface;
 
-final readonly class FingerprintMatchService implements ServiceInterface
+final readonly class FingerprintMatchService implements FingerprintMatchServiceInterface
 {
     public function __construct(
         private FingerprintRepositoryInterface $fingerprintRepository,
-        private FingerprintFactory $fingerprintFactory,
+        private FingerprintFactoryInterface $fingerprintFactory,
     ) {
         /*_*/
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    #[Override]
     public function perform(string $value): ?Fingerprint
     {
         $result = $this->fingerprintRepository->findByValue($value);

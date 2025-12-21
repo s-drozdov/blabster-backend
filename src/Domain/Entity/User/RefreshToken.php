@@ -9,7 +9,10 @@ use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 use DateTimeImmutable;
 
-final readonly class RefreshToken implements EntityInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+readonly class RefreshToken implements EntityInterface
 {
     public function __construct(
         private UuidInterface $uuid,

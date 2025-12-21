@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Blabster\Domain\Service\Otp\Verify;
 
 use Webmozart\Assert\Assert;
-use Blabster\Domain\Service\ServiceInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Domain\Repository\OtpRepositoryInterface;
+use Override;
 
-final readonly class OtpVerifyService implements ServiceInterface
+final readonly class OtpVerifyService implements OtpVerifyServiceInterface
 {
     private const string ERROR_EMAIL_MISMATCH = 'OTP verification error. Email you have provided is not match with OTP initial email.';
     private const string ERROR_CODE_MISMATCH = 'OTP verification error. Wrong OTP code.';
@@ -20,6 +20,7 @@ final readonly class OtpVerifyService implements ServiceInterface
         /*_*/
     }
 
+    #[Override]
     public function perform(string $email, UuidInterface $otpUuid, string $otpCode): void
     {
         $otp = $this->otpRepository->getByUuid($otpUuid);

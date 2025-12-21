@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Factory\User;
 
+use Override;
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Event\User\UserCreated;
-use Blabster\Domain\Factory\FactoryInterface;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
-final readonly class UserFactory implements FactoryInterface
+final readonly class UserFactory implements UserFactoryInterface
 {
     public function __construct(
         private UuidHelperInterface $uuidHelper,
@@ -19,6 +19,7 @@ final readonly class UserFactory implements FactoryInterface
         /*_*/
     }
 
+    #[Override]
     public function create(string $email): User
     {
         Assert::notEmpty($email);

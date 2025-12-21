@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Domain\Service\User\MessengerAccount\Create;
+namespace Blabster\Domain\Service\MessengerAccount\Create;
 
 use Blabster\Domain\Entity\User\User;
-use Blabster\Domain\Service\ServiceInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
-use Blabster\Domain\Factory\User\MessengerAcccountFactory;
+use Blabster\Domain\Factory\User\MessengerAcccountFactoryInterface;
+use Override;
 
-final readonly class MessengerAccountCreateService implements ServiceInterface
+final readonly class MessengerAccountCreateService implements MessengerAccountCreateServiceInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private MessengerAcccountFactory $messengerAcccountFactory,
+        private MessengerAcccountFactoryInterface $messengerAcccountFactory,
     ) {
         /*_*/
     }
 
+    #[Override]
     public function perform(User $user, string $login, string $password, string $host): void
     {
         $user->setMessengerAccount(

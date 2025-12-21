@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Blabster\Library\SDK\Ejabberd;
 
+use Override;
 use Webmozart\Assert\Assert;
-use InvalidArgumentException;
 use Psr\Http\Client\ClientInterface;
 use Blabster\Library\SDK\SdkInterface;
 use Psr\Http\Message\RequestInterface;
@@ -22,7 +22,7 @@ use Blabster\Library\SDK\Ejabberd\Request\CheckAccountRequestDto;
 use Blabster\Library\SDK\Ejabberd\Request\AddRosterItemRequestDto;
 use Blabster\Library\SDK\Ejabberd\Response\CheckAccountResponseDto;
 
-final class EjabberdSdk implements SdkInterface
+final class EjabberdSdk implements EjabberdSdkInterface
 {
     public function __construct(
         private ClientInterface $client,
@@ -36,9 +36,7 @@ final class EjabberdSdk implements SdkInterface
         /*_*/
     }
     
-    /**
-     * @throws InvalidArgumentException
-     */
+    #[Override]
     public function addRosterItem(AddRosterItemRequestDto $requestDto): void
     {
         $response = $this->client->sendRequest(
@@ -48,9 +46,7 @@ final class EjabberdSdk implements SdkInterface
         Assert::eq($response->getStatusCode(), Response::HTTP_OK, SdkInterface::ERROR_BAD_RESPONSE);
     }
     
-    /**
-     * @throws InvalidArgumentException
-     */
+    #[Override]
     public function checkAccount(CheckAccountRequestDto $requestDto): CheckAccountResponseDto
     {
         $response = $this->client->sendRequest(
@@ -66,9 +62,7 @@ final class EjabberdSdk implements SdkInterface
         );
     }
     
-    /**
-     * @throws InvalidArgumentException
-     */
+    #[Override]
     public function register(RegisterRequestDto $requestDto): void
     {
         $response = $this->client->sendRequest(

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Service\User\Logout;
 
+use Override;
 use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\User\User;
-use Blabster\Domain\Service\ServiceInterface;
 use Blabster\Domain\Repository\UserRepositoryInterface;
 use Blabster\Domain\Repository\RefreshTokenRepositoryInterface;
 
-final readonly class UserLogoutService implements ServiceInterface
+final readonly class UserLogoutService implements UserLogoutServiceInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
@@ -19,6 +19,7 @@ final readonly class UserLogoutService implements ServiceInterface
         /*_*/
     }
 
+    #[Override]
     public function perform(string $email, string $refreshTokenValue): User
     {
         $user = $this->userRepository->getByEmailAndToken($email, $refreshTokenValue);

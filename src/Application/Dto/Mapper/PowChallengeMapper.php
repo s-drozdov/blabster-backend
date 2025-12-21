@@ -12,9 +12,11 @@ use Blabster\Domain\DomainObjectInterface;
 use Blabster\Application\Dto\PowChallengeDto;
 
 /**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ * 
  * @implements MapperInterface<PowChallenge,PowChallengeDto>
  */
-final readonly class PowChallengeMapper implements MapperInterface
+readonly class PowChallengeMapper implements MapperInterface
 {
     #[Override]
     public function mapDomainObjectToDto(DomainObjectInterface $object): PowChallengeDto
@@ -24,7 +26,7 @@ final readonly class PowChallengeMapper implements MapperInterface
             prefix: $object->getPrefix(),
             salt: $object->getSalt(),
             difficulty: $object->getDifficulty(),
-            expires_at: $object->getExpiredAt(),
+            expires_at: $object->getExpiresAt(),
         );
     }
 

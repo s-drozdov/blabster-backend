@@ -8,7 +8,7 @@ use Override;
 use Webmozart\Assert\Assert;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Application\Bus\Query\QueryHandlerInterface;
-use Blabster\Domain\Service\User\GetByEmail\UserByEmailGetService;
+use Blabster\Domain\Service\User\GetByEmail\UserByEmailGetServiceInterface;
 use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
 use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryResult;
 
@@ -18,7 +18,7 @@ use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryRes
 final readonly class MessengerAccountQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private UserByEmailGetService $userByEmailGetService,
+        private UserByEmailGetServiceInterface $userByEmailGetService,
     ) {
         /*_*/
     }

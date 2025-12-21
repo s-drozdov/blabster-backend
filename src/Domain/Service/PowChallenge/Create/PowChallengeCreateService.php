@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace Blabster\Domain\Service\PowChallenge\Create;
 
 use Blabster\Domain\Entity\PowChallenge;
-use Blabster\Domain\Factory\PowChallengeFactory;
+use Blabster\Domain\Factory\PowChallengeFactoryInterface;
 use Blabster\Domain\Repository\PowChallengeRepositoryInterface;
-use Blabster\Domain\Service\ServiceInterface;
+use Override;
 
-final readonly class PowChallengeCreateService implements ServiceInterface
+final readonly class PowChallengeCreateService implements PowChallengeCreateServiceInterface
 {
     public function __construct(
-        private PowChallengeFactory $powChallengeFactory,
+        private PowChallengeFactoryInterface $powChallengeFactory,
         private PowChallengeRepositoryInterface $powChallengeRepository,
         private int $difficulty,
     ) {
         /*_*/
     }
 
+    #[Override]
     public function perform(): PowChallenge
     {
         $powChallenge = $this->powChallengeFactory->create($this->difficulty);

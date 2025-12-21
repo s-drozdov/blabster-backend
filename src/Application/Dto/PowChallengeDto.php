@@ -8,7 +8,10 @@ use DateTimeImmutable;
 use Blabster\Domain\ValueObject\UuidInterface;
 use Blabster\Library\Dto\DtoInterface;
 
-final readonly class PowChallengeDto implements DtoInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+readonly class PowChallengeDto implements DtoInterface
 {
     public function __construct(
         public UuidInterface $uuid,

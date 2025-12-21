@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Service\Otp\Create;
 
+use Override;
 use Blabster\Domain\Entity\Otp;
-use Blabster\Domain\Factory\OtpFactory;
-use Blabster\Domain\Service\ServiceInterface;
+use Blabster\Domain\Factory\OtpFactoryInterface;
 use Blabster\Domain\Repository\OtpRepositoryInterface;
 
-final readonly class OtpCreateService implements ServiceInterface
+final readonly class OtpCreateService implements OtpCreateServiceInterface
 {
     public function __construct(
-        private OtpFactory $otpFactory,
+        private OtpFactoryInterface $otpFactory,
         private OtpRepositoryInterface $otpRepository,
     ) {
         /*_*/
     }
 
+    #[Override]
     public function perform(string $email): Otp
     {
         $otp = $this->otpFactory->create($email);

@@ -8,10 +8,10 @@ use Override;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Application\Bus\Event\EventBusInterface;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
-use Blabster\Domain\Service\User\GetByRefresh\UserByRefreshGetService;
 use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandResult;
+use Blabster\Domain\Service\User\GetByRefresh\UserByRefreshGetServiceInterface;
 
 /**
  * @implements CommandHandlerInterface<UserRefreshCommand,UserRefreshCommandResult>
@@ -19,7 +19,7 @@ use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandResult;
 final readonly class UserRefreshCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private UserByRefreshGetService $userByRefreshGetService,
+        private UserByRefreshGetServiceInterface $userByRefreshGetService,
         private JWTTokenManagerInterface $jwtManager,
         private EventBusInterface $eventBus,
     ) {

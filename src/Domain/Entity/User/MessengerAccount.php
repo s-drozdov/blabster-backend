@@ -9,7 +9,10 @@ use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 
-final readonly class MessengerAccount implements EntityInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+readonly class MessengerAccount implements EntityInterface
 {
     public function __construct(
         private UuidInterface $uuid,

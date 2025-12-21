@@ -68,15 +68,18 @@ services:
 
 # factories
 
-    Blabster\Domain\Factory\PowChallengeFactory:
-        arguments:
-            $ttlSeconds: '%env(POW_CHALLENGE_TTL)%'
-
-    Blabster\Domain\Factory\FingerprintFactory:
+    Blabster\Domain\Factory\FingerprintFactoryInterface:
+        class: Blabster\Domain\Factory\FingerprintFactory
         arguments:
             $ttlSeconds: '%env(FINGERPRINT_TTL)%'
 
-    Blabster\Domain\Factory\User\RefreshTokenFactory:
+    Blabster\Domain\Factory\PowChallengeFactoryInterface:
+        class: Blabster\Domain\Factory\PowChallengeFactory
+        arguments:
+            $ttlSeconds: '%env(POW_CHALLENGE_TTL)%'
+
+    Blabster\Domain\Factory\User\RefreshTokenFactoryInterface:
+        class: Blabster\Domain\Factory\User\RefreshTokenFactory
         arguments:
             $expirationPeriod: '%env(REFRESH_TOKEN_EXPIRATION_PERIOD)%'
 
@@ -102,9 +105,8 @@ services:
 
 # domain services
 
-    Blabster\Domain\Service\Fingerprint\Validation\FingerprintMatchService: ~
-
-    Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService:
+    Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateServiceInterface:
+        class: Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService
         arguments:
             $difficulty: '%env(POW_CHALLENGE_DIFFICULTY)%'
 
@@ -134,7 +136,6 @@ services:
             $templateHtml: '%env(MAILER_TEMPLATE_HTML)%'
             $templateText: '%env(MAILER_TEMPLATE_TEXT)%'
             $messageLocale: '%env(MAILER_LOCALE)%'
-            
         
 # library
 
@@ -143,12 +144,14 @@ services:
 
 # SDK
 
-    Blabster\Library\SDK\Turnstile\TurnstileSdk:
+    Blabster\Library\SDK\Turnstile\TurnstileSdkInterface:
+        class: Blabster\Library\SDK\Turnstile\TurnstileSdk
         arguments:
             $apiUrl: '%env(TURNSTILE_API_URL)%'
             $apiSecret: '%env(TURNSTILE_API_SECRET)%'
 
-    Blabster\Library\SDK\Ejabberd\EjabberdSdk:
+    Blabster\Library\SDK\Ejabberd\EjabberdSdkInterface:
+        class: Blabster\Library\SDK\Ejabberd\EjabberdSdk
         arguments:
             $apiUrl: '%env(EJABBERD_API_URL)%'
             $apiBasicLogin: '%env(EJABBERD_API_BASIC_LOGIN)%'

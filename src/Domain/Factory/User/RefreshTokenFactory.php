@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Factory\User;
 
+use Override;
 use DateInterval;
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Domain\Entity\User\RefreshToken;
-use Blabster\Domain\Factory\FactoryInterface;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
 
-final readonly class RefreshTokenFactory implements FactoryInterface
+final readonly class RefreshTokenFactory implements RefreshTokenFactoryInterface
 {
     public function __construct(
         private UuidHelperInterface $uuidHelper,
@@ -21,6 +21,7 @@ final readonly class RefreshTokenFactory implements FactoryInterface
         /*_*/
     }
 
+    #[Override]
     public function create(User $user, string $tokenValue): RefreshToken
     {
         Assert::notEmpty($tokenValue);

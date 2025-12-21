@@ -6,13 +6,13 @@ namespace Blabster\Application\UseCase\Command\Otp\Create;
 
 use Override;
 use Webmozart\Assert\Assert;
-use Blabster\Library\SDK\Turnstile\TurnstileSdk;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Domain\Service\Otp\Create\OtpCreateService;
+use Blabster\Library\SDK\Turnstile\TurnstileSdkInterface;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
+use Blabster\Domain\Service\Otp\Create\OtpCreateServiceInterface;
 use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
-use Blabster\Domain\Service\Fingerprint\Match\FingerprintMatchService;
-use Blabster\Domain\Service\PowChallenge\Validation\PowChallengeValidationService;
+use Blabster\Domain\Service\Fingerprint\Match\FingerprintMatchServiceInterface;
+use Blabster\Domain\Service\PowChallenge\Validation\PowChallengeValidationServiceInterface;
 
 /**
  * @implements CommandHandlerInterface<OtpCreateCommand,OtpCreateCommandResult>
@@ -22,10 +22,10 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
     private const string ERROR_VALIDATION = 'Validation was not passed.';
 
     public function __construct(
-        private PowChallengeValidationService $powChallengeValidationService,
-        private FingerprintMatchService $fingerprintMatchService,
-        private TurnstileSdk $turnstileSdk,
-        private OtpCreateService $otpCreateService,
+        private PowChallengeValidationServiceInterface $powChallengeValidationService,
+        private FingerprintMatchServiceInterface $fingerprintMatchService,
+        private TurnstileSdkInterface $turnstileSdk,
+        private OtpCreateServiceInterface $otpCreateService,
         private OtpMailServiceInterface $otpMailService,
     ) {
         /*_*/
@@ -35,7 +35,7 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
     public function __invoke(CqrsElementInterface $command): OtpCreateCommandResult
     {
         $fingerprint = $this->fingerprintMatchService->perform($command->fingerprint);
-        $expiresAt = $fingerprint?->getExpiredAt();
+        $expiresAt = $fingerprint?->getExpiresAt();
 
         if ($expiresAt !== null) {
             return new OtpCreateCommandResult(

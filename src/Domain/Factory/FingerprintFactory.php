@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Factory;
 
+use Override;
 use Blabster\Domain\Entity\Fingerprint;
-use Blabster\Domain\Helper\DateTime\DateTimeHelperInterface;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
+use Blabster\Domain\Helper\DateTime\DateTimeHelperInterface;
 
-final readonly class FingerprintFactory implements FactoryInterface
+final readonly class FingerprintFactory implements FingerprintFactoryInterface
 {
     public function __construct(
         private UuidHelperInterface $uuidHelper,
@@ -18,6 +19,7 @@ final readonly class FingerprintFactory implements FactoryInterface
         /*_*/
     }
 
+    #[Override]
     public function create(string $value): Fingerprint
     {
         return new Fingerprint(

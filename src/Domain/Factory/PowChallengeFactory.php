@@ -7,8 +7,9 @@ namespace Blabster\Domain\Factory;
 use Blabster\Domain\Entity\PowChallenge;
 use Blabster\Domain\Helper\DateTime\DateTimeHelperInterface;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
+use Override;
 
-final readonly class PowChallengeFactory implements FactoryInterface
+final readonly class PowChallengeFactory implements PowChallengeFactoryInterface
 {
     public function __construct(
         private UuidHelperInterface $uuidHelper,
@@ -18,6 +19,7 @@ final readonly class PowChallengeFactory implements FactoryInterface
         /*_*/
     }
 
+    #[Override]
     public function create(int $difficulty): PowChallenge
     {
         return new PowChallenge(

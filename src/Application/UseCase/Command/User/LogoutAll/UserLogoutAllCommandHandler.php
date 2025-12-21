@@ -8,7 +8,7 @@ use Override;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Application\Bus\Event\EventBusInterface;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
-use Blabster\Domain\Service\User\LogoutAll\UserLogoutAllService;
+use Blabster\Domain\Service\User\LogoutAll\UserLogoutAllServiceInterface;
 use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand;
 use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandResult;
 
@@ -18,7 +18,7 @@ use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandResu
 final readonly class UserLogoutAllCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private UserLogoutAllService $userLogoutAllService,
+        private UserLogoutAllServiceInterface $userLogoutAllService,
         private EventBusInterface $eventBus,
     ) {
         /*_*/

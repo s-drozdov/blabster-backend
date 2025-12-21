@@ -8,17 +8,17 @@ use Override;
 use InvalidArgumentException;
 use Blabster\Domain\Entity\User\User;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Domain\Service\Otp\Verify\OtpVerifyService;
-use Blabster\Domain\Service\User\Create\UserCreateService;
-use Blabster\Application\Bus\Command\CommandHandlerInterface;
 use Blabster\Application\Bus\Event\EventBusInterface;
-use Blabster\Domain\Service\User\GetByEmail\UserByEmailGetService;
+use Blabster\Library\DbTransaction\DbTransactionInterface;
+use Blabster\Application\Bus\Command\CommandHandlerInterface;
+use Blabster\Domain\Service\Otp\Verify\OtpVerifyServiceInterface;
+use Blabster\Domain\Service\User\Create\UserCreateServiceInterface;
 use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Blabster\Domain\Service\RefreshToken\Create\RefreshTokenCreateService;
 use Blabster\Application\UseCase\Command\User\Login\UserLoginCommandResult;
-use Blabster\Library\DbTransaction\DbTransactionInterface;
+use Blabster\Domain\Service\User\GetByEmail\UserByEmailGetServiceInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Blabster\Domain\Service\RefreshToken\Create\RefreshTokenCreateServiceInterface;
 
 /**
  * @implements CommandHandlerInterface<UserLoginCommand,UserLoginCommandResult>
@@ -26,11 +26,11 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 final readonly class UserLoginCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private OtpVerifyService $otpVerifyService,
+        private OtpVerifyServiceInterface $otpVerifyService,
         private JWTTokenManagerInterface $jwtManager,
-        private RefreshTokenCreateService $refreshTokenCreateService,
-        private UserByEmailGetService $userByEmailGetService,
-        private UserCreateService $userCreateService,
+        private RefreshTokenCreateServiceInterface $refreshTokenCreateService,
+        private UserByEmailGetServiceInterface $userByEmailGetService,
+        private UserCreateServiceInterface $userCreateService,
         private EventBusInterface $eventBus,
         private DbTransactionInterface $dbTransaction,
     ) {

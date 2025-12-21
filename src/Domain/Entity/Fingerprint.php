@@ -8,7 +8,10 @@ use Override;
 use Blabster\Domain\ValueObject\UuidInterface;
 use DateTimeImmutable;
 
-final readonly class Fingerprint implements EntityInterface
+/**
+ * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
+ */
+readonly class Fingerprint implements EntityInterface
 {
     public function __construct(
         private UuidInterface $uuid,
@@ -29,7 +32,7 @@ final readonly class Fingerprint implements EntityInterface
         return $this->value;
     }
 
-    public function getExpiredAt(): ?DateTimeImmutable
+    public function getExpiresAt(): ?DateTimeImmutable
     {
         return $this->expires_at;
     }

@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Blabster\Application\EventHandler\User\Created;
 
 use Blabster\Domain\Event\User\UserCreated;
-use Blabster\Library\SDK\Ejabberd\EjabberdSdk;
-use Blabster\Application\Bus\Event\EventBusInterface;
 use Blabster\Domain\Helper\Uuid\UuidHelperInterface;
-use Blabster\Application\Bus\Event\EventHandlerInterface;
+use Blabster\Application\Bus\Event\EventBusInterface;
+use Blabster\Library\SDK\Ejabberd\EjabberdSdkInterface;
 use Blabster\Domain\Helper\String\StringHelperInterface;
+use Blabster\Application\Bus\Event\EventHandlerInterface;
 use Blabster\Library\SDK\Ejabberd\Request\RegisterRequestDto;
-use Blabster\Domain\Service\User\GetByUuid\UserByUuidGetService;
 use Blabster\Library\SDK\Ejabberd\Request\CheckAccountRequestDto;
-use Blabster\Domain\Service\User\MessengerAccount\Create\MessengerAccountCreateService;
+use Blabster\Domain\Service\User\GetByUuid\UserByUuidGetServiceInterface;
+use Blabster\Domain\Service\MessengerAccount\Create\MessengerAccountCreateService;
+use Blabster\Domain\Service\MessengerAccount\Create\MessengerAccountCreateServiceInterface;
 
 /**
  * @implements EventHandlerInterface<UserCreated>
@@ -25,11 +26,11 @@ final readonly class RegisterMessengerAccount implements EventHandlerInterface
     private const string PASSWORD_SYMBOLS = '!@()';
 
     public function __construct(
-        private UserByUuidGetService $userByUuidGetService,
-        private EjabberdSdk $ejabberdSdk,
+        private UserByUuidGetServiceInterface $userByUuidGetService,
+        private EjabberdSdkInterface $ejabberdSdk,
         private StringHelperInterface $stringHelper,
         private UuidHelperInterface $uuidHelper,
-        private MessengerAccountCreateService $messengerAccountCreateService,
+        private MessengerAccountCreateServiceInterface $messengerAccountCreateService,
         private EventBusInterface $eventBus,
         private string $messengerHost,
     ) {

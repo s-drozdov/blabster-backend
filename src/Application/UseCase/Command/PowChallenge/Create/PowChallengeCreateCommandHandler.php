@@ -8,7 +8,7 @@ use Override;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Application\Dto\Mapper\PowChallengeMapper;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
-use Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService;
+use Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateServiceInterface;
 
 /**
  * @implements CommandHandlerInterface<PowChallengeCreateCommand,PowChallengeCreateCommandResult>
@@ -16,7 +16,7 @@ use Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService;
 final readonly class PowChallengeCreateCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private PowChallengeCreateService $powChallengeCreateService,
+        private PowChallengeCreateServiceInterface $powChallengeCreateService,
         private PowChallengeMapper $powChallengeMapper,
     ) {
         /*_*/
