@@ -10,17 +10,17 @@ use Blabster\Library\SDK\Ejabberd\EjabberdSdkInterface;
 use Blabster\Domain\Event\User\MessengerAccountRegistered;
 use Blabster\Library\SDK\Ejabberd\Enum\RosterSubscriptionStatus;
 use Blabster\Library\SDK\Ejabberd\Request\AddRosterItemRequestDto;
-use Blabster\Application\EventHandler\MessengerAccount\Registered\AddContactToRoaster;
+use Blabster\Application\EventHandler\MessengerAccount\Registered\AddAdminContactToUserRoaster;
 
-final class AddContactToRoasterTest extends TestCase
+final class AddAdminContactToUserRoasterTest extends TestCase
 {
     private const string LOGIN = 'login';
     private const string HOST = 'host';
-    private const string REQUIRED_CONTACT_LOGIN = 'test';
-    private const string REQUIRED_CONTACT_NICKNAME = 'test_nick';
+    private const string ADMIN_CONTACT_LOGIN = 'test';
+    private const string ADMIN_CONTACT_NICKNAME = 'test_nick';
 
     #[Test]
-    public function testAddsRequiredContactToRoster(): void
+    public function testAddsadminContactToRoster(): void
     {
         // arrange
         $event = new MessengerAccountRegistered(
@@ -39,9 +39,9 @@ final class AddContactToRoasterTest extends TestCase
                         return
                             $dto->localuser === self::LOGIN &&
                             $dto->localhost === self::HOST &&
-                            $dto->user === self::REQUIRED_CONTACT_LOGIN &&
+                            $dto->user === self::ADMIN_CONTACT_LOGIN &&
                             $dto->host === self::HOST &&
-                            $dto->nick === self::REQUIRED_CONTACT_NICKNAME &&
+                            $dto->nick === self::ADMIN_CONTACT_NICKNAME &&
                             $dto->groups === [] &&
                             $dto->subs === RosterSubscriptionStatus::EveryoneSee->value;
                     }
@@ -49,11 +49,11 @@ final class AddContactToRoasterTest extends TestCase
             )
         ;
 
-        $handler = new AddContactToRoaster(
+        $handler = new AddAdminContactToUserRoaster(
             ejabberdSdk: $sdk,
             messengerHost: self::HOST,
-            requiredContactLogin: self::REQUIRED_CONTACT_LOGIN,
-            requiredContactNickname: self::REQUIRED_CONTACT_NICKNAME,
+            adminContactLogin: self::ADMIN_CONTACT_LOGIN,
+            adminContactNickname: self::ADMIN_CONTACT_NICKNAME,
         );
 
         // act

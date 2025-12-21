@@ -219,11 +219,17 @@ services:
         arguments:
             $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
 
-    Blabster\Application\EventHandler\MessengerAccount\Registered\AddContactToRoaster:
+    Blabster\Application\EventHandler\MessengerAccount\Registered\AddAdminContactToUserRoaster:
         arguments:
             $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
-            $requiredContactLogin: '%env(MESSENGER_REQUIRED_CONTACT_LOGIN)%'
-            $requiredContactNickname: '%env(MESSENGER_REQUIRED_CONTACT_NICKNAME)%'
+            $adminContactLogin: '%env(MESSENGER_ADMIN_CONTACT_LOGIN)%'
+            $adminContactNickname: '%env(MESSENGER_ADMIN_CONTACT_NICKNAME)%'
+
+    Blabster\Application\EventHandler\MessengerAccount\Registered\AddUserContactToAdminRoaster:
+        arguments:
+            $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
+            $adminContactLogin: '%env(MESSENGER_ADMIN_CONTACT_LOGIN)%'
+            $adminContactGroup: '%env(MESSENGER_ADMIN_CONTACT_GROUP)%'
 
 # bus handlers
 
