@@ -35,7 +35,7 @@ final class OtpCreateAction
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 

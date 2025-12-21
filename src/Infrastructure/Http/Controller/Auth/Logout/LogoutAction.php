@@ -35,7 +35,7 @@ final class LogoutAction
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 

@@ -14,4 +14,5 @@ final class MessengerAccountQueryResult
 {
     public string $login;
     public string $password;
+    public string $host;
 }

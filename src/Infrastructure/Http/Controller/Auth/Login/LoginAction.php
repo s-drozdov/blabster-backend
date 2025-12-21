@@ -40,7 +40,7 @@ final class LoginAction
 
         private SerializerInterface $serializer,
         private bool $isCookieSecure,
-    ){
+    ) {
         /*_*/
     }
 

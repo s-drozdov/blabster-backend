@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\ValueResolver\Auth\Refresh;
+namespace Blabster\Infrastructure\Http\ValueResolver\Command\Otp\Create;
 
 use Override;
-use Webmozart\Assert\Assert;
-use Blabster\Infrastructure\Enum\CookieKey;
 use Symfony\Component\HttpFoundation\Request;
-use Blabster\Infrastructure\Enum\RequestKey;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
-use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
 
 /**
- * @extends AbstractValueResolver<UserRefreshCommand>
+ * @extends AbstractValueResolver<OtpCreateCommand>
  */
-final readonly class AuthRefreshValueResolver extends AbstractValueResolver
+final readonly class OtpCreateCommandValueResolver extends AbstractValueResolver
 {
     public function __construct(
         private DenormalizerInterface $denormalizer,
@@ -30,21 +27,15 @@ final readonly class AuthRefreshValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return UserRefreshCommand::class;
+        return OtpCreateCommand::class;
     }
 
     #[Override]
     protected function createFromRequest(Request $request): CqrsElementInterface
     {
-        $refreshToken = $request->cookies->get(CookieKey::RefreshToken->value);
-        Assert::notEmpty($refreshToken);
-
         return $this->denormalizer->denormalize(
-            array_merge(
-                $request->toArray(),
-                [RequestKey::RefreshTokenValue->value => $refreshToken],
-            ),
-            UserRefreshCommand::class,
+            $request->toArray(), 
+            OtpCreateCommand::class,
         );
     }
 }

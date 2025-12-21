@@ -35,7 +35,7 @@ final class RefreshAction
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 

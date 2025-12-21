@@ -34,7 +34,7 @@ final class PowChallengeCreateAction
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 

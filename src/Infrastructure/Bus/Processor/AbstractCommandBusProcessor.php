@@ -25,7 +25,7 @@ abstract readonly class AbstractCommandBusProcessor
         private CqrsBusInterface $bus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 

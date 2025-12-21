@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\ValueResolver\Auth\LogoutAll;
+namespace Blabster\Infrastructure\Http\ValueResolver\Command\User\Refresh;
 
 use Override;
 use Webmozart\Assert\Assert;
@@ -13,12 +13,12 @@ use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
-use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
 
 /**
- * @extends AbstractValueResolver<UserLogoutAllCommand>
+ * @extends AbstractValueResolver<UserRefreshCommand>
  */
-final readonly class AuthLogoutAllValueResolver extends AbstractValueResolver
+final readonly class UserRefreshCommandValueResolver extends AbstractValueResolver
 {
     public function __construct(
         private DenormalizerInterface $denormalizer,
@@ -30,7 +30,7 @@ final readonly class AuthLogoutAllValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return UserLogoutAllCommand::class;
+        return UserRefreshCommand::class;
     }
 
     #[Override]
@@ -44,7 +44,7 @@ final readonly class AuthLogoutAllValueResolver extends AbstractValueResolver
                 $request->toArray(),
                 [RequestKey::RefreshTokenValue->value => $refreshToken],
             ),
-            UserLogoutAllCommand::class,
+            UserRefreshCommand::class,
         );
     }
 }

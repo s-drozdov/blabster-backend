@@ -18,12 +18,10 @@ use Blabster\Library\Enum\SerializationContextParam;
 use Blabster\Application\Bus\Query\QueryBusInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Blabster\Application\Bus\Query\CommandBusInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
 use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
 use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryResult;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount\MessengerAccountQuery as MessengerAccountQuerySchema;
 use Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount\MessengerAccountQueryResult as MessengerAccountQueryResultSchema;
 
 #[AsController]
@@ -36,7 +34,7 @@ final class MessengerAccountGetAction
         private QueryBusInterface $queryBus,
 
         private SerializerInterface $serializer,
-    ){
+    ) {
         /*_*/
     }
 
@@ -45,13 +43,6 @@ final class MessengerAccountGetAction
         operationId: OpenApiOperationId::MessengerAccountGet->value,
         summary: OpenApiSummary::MessengerAccountGet->value,
         tags: [OpenApiTag::MessengerAccount->value],
-        requestBody: new OA\RequestBody(
-            required: true,
-            description: OpenApiSchemaDescription::MessengerAccountQuery->value,
-            content: new OA\JsonContent(
-                ref: new Model(type: MessengerAccountQuerySchema::class),
-            ),
-        ),
         responses: [
             new OA\Response(
                 response: Response::HTTP_OK,

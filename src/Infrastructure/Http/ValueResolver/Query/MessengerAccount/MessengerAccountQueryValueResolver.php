@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\ValueResolver\Auth\Login;
+namespace Blabster\Infrastructure\Http\ValueResolver\Query\MessengerAccount;
 
 use Override;
+use Webmozart\Assert\Assert;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Blabster\Application\Bus\CqrsElementInterface;
-use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
 
 /**
- * @extends AbstractValueResolver<UserLoginCommand>
+ * @extends AbstractValueResolver<MessengerAccountQuery>
  */
-final readonly class AuthLoginValueResolver extends AbstractValueResolver
+final readonly class MessengerAccountQueryValueResolver extends AbstractValueResolver
 {
     public function __construct(
-        private DenormalizerInterface $denormalizer,
+        private Security $security,
         ValidatorInterface $validator,
     ) {
         parent::__construct(validator: $validator);
@@ -27,15 +28,17 @@ final readonly class AuthLoginValueResolver extends AbstractValueResolver
     #[Override]
     protected function getTargetClass(): string
     {
-        return UserLoginCommand::class;
+        return MessengerAccountQuery::class;
     }
 
     #[Override]
     protected function createFromRequest(Request $request): CqrsElementInterface
     {
-        return $this->denormalizer->denormalize(
-            $request->toArray(), 
-            UserLoginCommand::class,
+        $user = $this->security->getUser();
+        Assert::notNull($user);
+
+        return new MessengerAccountQuery(
+            email: $user->getUserIdentifier(),
         );
     }
 }
