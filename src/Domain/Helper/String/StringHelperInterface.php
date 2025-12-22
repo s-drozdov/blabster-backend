@@ -21,4 +21,6 @@ interface StringHelperInterface extends HelperInterface
     public function getLocalPartFromEmail(string $email): string;
 
     public function generateMessengerPassword(int $length, string $symbols): string;
+
+    public function snakeToHumanReadable(string $source): string;
 }

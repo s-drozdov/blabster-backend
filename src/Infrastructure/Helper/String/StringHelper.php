@@ -6,6 +6,7 @@ namespace Blabster\Infrastructure\Helper\String;
 
 use Override;
 
+use function Symfony\Component\String\u;
 use Webmozart\Assert\Assert;
 use Blabster\Domain\Helper\String\StringHelperInterface;
 
@@ -54,5 +55,13 @@ final readonly class StringHelper implements StringHelperInterface
         }
 
         return $password;
+    }
+
+    #[Override]
+    public function snakeToHumanReadable(string $source): string
+    {
+        return ucfirst(
+            (string) u($source)->replace('_', ' '),
+        );
     }
 }

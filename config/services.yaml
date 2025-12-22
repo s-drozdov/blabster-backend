@@ -237,6 +237,11 @@ services:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand }
 
+    Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommand }
+
+
     Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommand }
