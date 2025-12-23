@@ -20,6 +20,7 @@ final readonly class OtpMailService implements OtpMailServiceInterface
         private string $templateHtml,
         private string $templateText,
         private string $messageLocale,
+        private string $replyToEmail,
     ) {
         /*_*/
     }
@@ -41,6 +42,7 @@ final readonly class OtpMailService implements OtpMailServiceInterface
         return (new TemplatedEmail())
             ->from($this->senderEmail)
             ->to($email)
+            ->replyTo($this->replyToEmail)
             ->subject($this->emailSubject)
             ->htmlTemplate($this->templateHtml)
             ->textTemplate($this->templateText)

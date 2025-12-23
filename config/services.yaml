@@ -136,6 +136,7 @@ services:
             $templateHtml: '%env(MAILER_TEMPLATE_HTML)%'
             $templateText: '%env(MAILER_TEMPLATE_TEXT)%'
             $messageLocale: '%env(MAILER_LOCALE)%'
+            $replyToEmail: '%env(MAILER_REPLY_TO)%'
         
 # library
 
