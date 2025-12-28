@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Controller\Auth\Login;
+namespace Blabster\Infrastructure\Http\Controller\User\Login;
 
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;
@@ -30,7 +30,7 @@ use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Login\UserLoginC
 use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Login\UserLoginCommandResult as UserLoginCommandResultSchema;
 
 #[AsController]
-#[Route(Action::auth_login->value, name: Action::auth_login->name, methods: [Request::METHOD_POST])]
+#[Route(Action::user_login->value, name: Action::user_login->name, methods: [Request::METHOD_POST])]
 final class LoginAction
 {
     public function __construct(
@@ -45,10 +45,10 @@ final class LoginAction
     }
 
     #[OA\Post(
-        path: Action::auth_login->value,
-        operationId: OpenApiOperationId::AuthLogin->value,
-        summary: OpenApiSummary::AuthLogin->value,
-        tags: [OpenApiTag::Auth->value],
+        path: Action::user_login->value,
+        operationId: OpenApiOperationId::UserLogin->value,
+        summary: OpenApiSummary::UserLogin->value,
+        tags: [OpenApiTag::User->value],
         requestBody: new OA\RequestBody(
             required: true,
             description: OpenApiSchemaDescription::UserLoginCommand->value,

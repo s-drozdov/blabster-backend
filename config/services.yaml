@@ -210,7 +210,7 @@ services:
 
 # controllers
 
-    Blabster\Infrastructure\Http\Controller\Auth\Login\LoginAction:
+    Blabster\Infrastructure\Http\Controller\User\Login\LoginAction:
         arguments:
             $isCookieSecure: '%env(bool:COOKIE_WITH_SECURE)%'
 

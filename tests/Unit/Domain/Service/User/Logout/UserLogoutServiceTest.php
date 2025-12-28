@@ -16,7 +16,6 @@ use Blabster\Domain\Repository\RefreshTokenRepositoryInterface;
 
 final class UserLogoutServiceTest extends TestCase
 {
-    private const string EMAIL = 'test@test.com';
     private const string REFRESH_TOKEN_VALUE = 'refresh-token-value';
     private const string NON_EXISTED_REFRESH_TOKEN_VALUE = 'non-existed-refresh-token-value';
 
@@ -34,8 +33,8 @@ final class UserLogoutServiceTest extends TestCase
 
         $userRepository
             ->expects(self::once())
-            ->method('getByEmailAndToken')
-            ->with(self::EMAIL, self::REFRESH_TOKEN_VALUE)
+            ->method('getByRefreshToken')
+            ->with(self::REFRESH_TOKEN_VALUE)
             ->willReturn($user)
         ;
 
@@ -56,7 +55,7 @@ final class UserLogoutServiceTest extends TestCase
         );
 
         // act
-        $result = $service->perform(self::EMAIL, self::REFRESH_TOKEN_VALUE);
+        $result = $service->perform(self::REFRESH_TOKEN_VALUE);
 
         // assert
         self::assertSame($user, $result);
@@ -70,7 +69,7 @@ final class UserLogoutServiceTest extends TestCase
         $user = $this->createStub(User::class);
 
         $userRepository = $this->createStub(UserRepositoryInterface::class);
-        $userRepository->method('getByEmailAndToken')->willReturn($user);
+        $userRepository->method('getByRefreshToken')->willReturn($user);
 
         $refreshTokenRepository = $this->createStub(RefreshTokenRepositoryInterface::class);
         $refreshTokenRepository->method('findByToken')->willReturn(null);
@@ -83,6 +82,6 @@ final class UserLogoutServiceTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // act
-        $service->perform(self::EMAIL, self::NON_EXISTED_REFRESH_TOKEN_VALUE);
+        $service->perform(self::NON_EXISTED_REFRESH_TOKEN_VALUE);
     }
 }

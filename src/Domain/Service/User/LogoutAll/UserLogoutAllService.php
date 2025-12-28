@@ -17,9 +17,9 @@ final readonly class UserLogoutAllService implements UserLogoutAllServiceInterfa
     }
 
     #[Override]
-    public function perform(string $email, string $refreshTokenValue): User
+    public function perform(string $refreshTokenValue): User
     {
-        $user = $this->userRepository->getByEmailAndToken($email, $refreshTokenValue);
+        $user = $this->userRepository->getByRefreshToken($refreshTokenValue);
 
         $user->getRefreshTokenList()->clear();
         $this->userRepository->update($user);

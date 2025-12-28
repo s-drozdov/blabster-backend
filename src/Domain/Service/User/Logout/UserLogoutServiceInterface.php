@@ -9,5 +9,5 @@ use Blabster\Domain\Service\ServiceInterface;
 
 interface UserLogoutServiceInterface extends ServiceInterface
 {
-    public function perform(string $email, string $refreshTokenValue): User;
+    public function perform(string $refreshTokenValue): User;
 }

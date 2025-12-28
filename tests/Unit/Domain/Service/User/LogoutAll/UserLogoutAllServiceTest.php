@@ -14,7 +14,6 @@ use Blabster\Domain\Service\User\LogoutAll\UserLogoutAllService;
 
 final class UserLogoutAllServiceTest extends TestCase
 {
-    private const string EMAIL = 'test@test.com';
     private const string REFRESH_TOKEN_VALUE = 'refresh-token-value';
 
     #[Test]
@@ -33,8 +32,8 @@ final class UserLogoutAllServiceTest extends TestCase
 
         $userRepository
             ->expects(self::once())
-            ->method('getByEmailAndToken')
-            ->with(self::EMAIL, self::REFRESH_TOKEN_VALUE)
+            ->method('getByRefreshToken')
+            ->with(self::REFRESH_TOKEN_VALUE)
             ->willReturn($user)
         ;
 
@@ -43,7 +42,7 @@ final class UserLogoutAllServiceTest extends TestCase
         $service = new UserLogoutAllService($userRepository);
 
         // act
-        $result = $service->perform(self::EMAIL, self::REFRESH_TOKEN_VALUE);
+        $result = $service->perform(self::REFRESH_TOKEN_VALUE);
 
         // assert
         self::assertSame($user, $result);

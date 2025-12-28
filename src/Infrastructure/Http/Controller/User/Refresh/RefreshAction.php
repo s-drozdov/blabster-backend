@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Controller\Auth\LogoutAll;
+namespace Blabster\Infrastructure\Http\Controller\User\Refresh;
 
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;
@@ -20,18 +20,18 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
-use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand;
-use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandResult;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\LogoutAll\UserLogoutAllCommand as UserLogoutAllCommandSchema;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\LogoutAll\UserLogoutAllCommandResult as UserLogoutAllCommandResultSchema;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommand;
+use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandResult;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Refresh\UserRefreshCommand as UserRefreshCommandSchema;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Command\User\Refresh\UserRefreshCommandResult as UserRefreshCommandResultSchema;
 
 #[AsController]
-#[Route(Action::auth_logout_all->value, name: Action::auth_logout_all->name, methods: [Request::METHOD_POST])]
-final class LogoutAllAction
+#[Route(Action::user_refresh->value, name: Action::user_refresh->name, methods: [Request::METHOD_POST])]
+final class RefreshAction
 {
     public function __construct(
 
-        /** @var CommandBusInterface<UserLogoutAllCommand,UserLogoutAllCommandResult> */
+        /** @var CommandBusInterface<UserRefreshCommand,UserRefreshCommandResult> */
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
@@ -40,28 +40,28 @@ final class LogoutAllAction
     }
 
     #[OA\Post(
-        path: Action::auth_logout_all->value,
-        operationId: OpenApiOperationId::AuthLogoutAll->value,
-        summary: OpenApiSummary::AuthLogoutAll->value,
-        tags: [OpenApiTag::Auth->value],
+        path: Action::user_refresh->value,
+        operationId: OpenApiOperationId::UserRefresh->value,
+        summary: OpenApiSummary::UserRefresh->value,
+        tags: [OpenApiTag::User->value],
         requestBody: new OA\RequestBody(
             required: true,
-            description: OpenApiSchemaDescription::UserLogoutAllCommand->value,
+            description: OpenApiSchemaDescription::UserRefreshCommand->value,
             content: new OA\JsonContent(
-                ref: new Model(type: UserLogoutAllCommandSchema::class),
+                ref: new Model(type: UserRefreshCommandSchema::class),
             ),
         ),
         responses: [
             new OA\Response(
                 response: Response::HTTP_OK,
-                description: OpenApiSchemaDescription::UserLogoutAllCommandResult->value,
+                description: OpenApiSchemaDescription::UserRefreshCommandResult->value,
                 content: new OA\JsonContent(
-                    ref: new Model(type: UserLogoutAllCommandResultSchema::class),
+                    ref: new Model(type: UserRefreshCommandResultSchema::class),
                 ),
             ),
         ],
     )]
-    public function __invoke(UserLogoutAllCommand $command): Response
+    public function __invoke(UserRefreshCommand $command): Response
     {
         return JsonResponse::fromJsonString(
             $this->serializer->serialize(

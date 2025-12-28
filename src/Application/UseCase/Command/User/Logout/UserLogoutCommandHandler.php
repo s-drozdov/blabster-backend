@@ -27,7 +27,7 @@ final readonly class UserLogoutCommandHandler implements CommandHandlerInterface
     #[Override]
     public function __invoke(CqrsElementInterface $command): UserLogoutCommandResult
     {
-        $user = $this->userLogoutService->perform($command->email, $command->refresh_token_value);
+        $user = $this->userLogoutService->perform($command->refresh_token_value);
         $this->eventBus->dispatch(...$user->pullEvents());
 
         return new UserLogoutCommandResult();

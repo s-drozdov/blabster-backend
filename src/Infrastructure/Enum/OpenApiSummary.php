@@ -6,10 +6,10 @@ namespace Blabster\Infrastructure\Enum;
 
 enum OpenApiSummary: string
 {
-    case AuthLogin = 'Login';
-    case AuthLogout = 'Logout';
-    case AuthLogoutAll = 'Logout from all devices';
-    case AuthRefresh = 'Refresh';
+    case UserLogin = 'Login';
+    case UserLogout = 'Logout';
+    case UserLogoutAll = 'Logout from all devices';
+    case UserRefresh = 'Refresh';
     case HealthCheck = 'Health check';
     case MessengerAccountGet = 'Get MessengerAccount';
     case OtpCreate = 'Create OTP';

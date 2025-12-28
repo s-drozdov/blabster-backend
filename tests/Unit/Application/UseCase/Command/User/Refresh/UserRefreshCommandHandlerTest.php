@@ -16,7 +16,6 @@ use Blabster\Application\UseCase\Command\User\Refresh\UserRefreshCommandHandler;
 
 final class UserRefreshCommandHandlerTest extends TestCase
 {
-    private const string EMAIL = 'test@test.com';
     private const string ACCESS_TOKEN_VALUE  = 'access-token';
     private const string REFRESH_TOKEN_VALUE = 'refresh-token';
 
@@ -25,7 +24,6 @@ final class UserRefreshCommandHandlerTest extends TestCase
     {
         // arrange
         $command = new UserRefreshCommand(
-            email: self::EMAIL,
             refresh_token_value: self::REFRESH_TOKEN_VALUE,
         );
 
@@ -37,7 +35,7 @@ final class UserRefreshCommandHandlerTest extends TestCase
         $userByRefreshGetService
             ->expects(self::once())
             ->method('perform')
-            ->with($command->email, $command->refresh_token_value)
+            ->with($command->refresh_token_value)
             ->willReturn($user)
         ;
 

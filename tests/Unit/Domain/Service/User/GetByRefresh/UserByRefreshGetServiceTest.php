@@ -13,7 +13,6 @@ use Blabster\Domain\Service\User\GetByRefresh\UserByRefreshGetService;
 
 final class UserByRefreshGetServiceTest extends TestCase
 {
-    private const string EMAIL = 'test@test.com';
     private const string REFRESH_TOKEN_VALUE = 'refresh-token-value';
     private const string INVALID_REFRESH_TOKEN_VALUE = 'invalid-refresh-token-value';
 
@@ -27,15 +26,15 @@ final class UserByRefreshGetServiceTest extends TestCase
 
         $repository
             ->expects(self::once())
-            ->method('getByEmailAndToken')
-            ->with(self::EMAIL, self::REFRESH_TOKEN_VALUE)
+            ->method('getByRefreshToken')
+            ->with(self::REFRESH_TOKEN_VALUE)
             ->willReturn($user)
         ;
 
         $service = new UserByRefreshGetService($repository);
 
         // act
-        $result = $service->perform(self::EMAIL, self::REFRESH_TOKEN_VALUE);
+        $result = $service->perform(self::REFRESH_TOKEN_VALUE);
 
         // assert
         self::assertSame($user, $result);
@@ -49,8 +48,8 @@ final class UserByRefreshGetServiceTest extends TestCase
 
         $repository
             ->expects(self::once())
-            ->method('getByEmailAndToken')
-            ->with(self::EMAIL, self::INVALID_REFRESH_TOKEN_VALUE)
+            ->method('getByRefreshToken')
+            ->with(self::INVALID_REFRESH_TOKEN_VALUE)
             ->willThrowException(new InvalidArgumentException())
         ;
 
@@ -59,6 +58,6 @@ final class UserByRefreshGetServiceTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // act
-        $service->perform(self::EMAIL, self::INVALID_REFRESH_TOKEN_VALUE);
+        $service->perform(self::INVALID_REFRESH_TOKEN_VALUE);
     }
 }

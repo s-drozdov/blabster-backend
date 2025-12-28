@@ -31,7 +31,7 @@ interface UserRepositoryInterface extends RepositoryInterface
      * @return User
      * @throws InvalidArgumentException
      */
-    public function getByEmailAndToken(string $email, string $refreshTokenValue): EntityInterface;
+    public function getByRefreshToken(string $refreshTokenValue): EntityInterface;
 
     public function save(User $entity): void;
 

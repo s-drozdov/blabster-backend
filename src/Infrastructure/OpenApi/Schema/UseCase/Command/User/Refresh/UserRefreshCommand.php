@@ -12,5 +12,5 @@ use OpenApi\Attributes as OA;
 #[OA\Schema()]
 final class UserRefreshCommand
 {
-    public string $email;
+    /*_*/
 }

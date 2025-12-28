@@ -44,14 +44,12 @@ final class UserRepository extends EntityRepository implements UserRepositoryInt
 
 
     #[Override]
-    public function getByEmailAndToken(string $email, string $refreshTokenValue): User
+    public function getByRefreshToken(string $refreshTokenValue): User
     {
         $entity = $this->createQueryBuilder('u')
             ->innerJoin('u.refreshTokens', 'rt')
-            ->andWhere('u.email = :email')
             ->andWhere('rt.value = :token')
             ->andWhere('rt.expires_at > :now')
-            ->setParameter('email', $email)
             ->setParameter('token', $refreshTokenValue)
             ->setParameter('now', new DateTimeImmutable(), Types::DATETIME_IMMUTABLE)
             ->getQuery()

@@ -29,7 +29,7 @@ final readonly class UserRefreshCommandHandler implements CommandHandlerInterfac
     #[Override]
     public function __invoke(CqrsElementInterface $command): UserRefreshCommandResult
     {
-        $user = $this->userByRefreshGetService->perform($command->email, $command->refresh_token_value);
+        $user = $this->userByRefreshGetService->perform($command->refresh_token_value);
         $this->eventBus->dispatch(...$user->pullEvents());
 
         return new UserRefreshCommandResult(

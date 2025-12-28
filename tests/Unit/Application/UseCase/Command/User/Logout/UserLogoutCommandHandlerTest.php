@@ -15,7 +15,6 @@ use Blabster\Application\UseCase\Command\User\Logout\UserLogoutCommandHandler;
 
 final class UserLogoutCommandHandlerTest extends TestCase
 {
-    private const string EMAIL = 'test@test.com';
     private const string REFRESH_TOKEN_VALUE = 'refresh-token';
 
     #[Test]
@@ -23,7 +22,6 @@ final class UserLogoutCommandHandlerTest extends TestCase
     {
         // arrange
         $command = new UserLogoutCommand(
-            email: self::EMAIL,
             refresh_token_value: self::REFRESH_TOKEN_VALUE,
         );
 
@@ -35,7 +33,7 @@ final class UserLogoutCommandHandlerTest extends TestCase
         $userLogoutService
             ->expects(self::once())
             ->method('perform')
-            ->with($command->email, $command->refresh_token_value)
+            ->with($command->refresh_token_value)
             ->willReturn($user)
         ;
 

@@ -17,8 +17,8 @@ final readonly class UserByRefreshGetService implements UserByRefreshGetServiceI
     }
 
     #[Override]
-    public function perform(string $email, string $refreshTokenValue): User
+    public function perform(string $refreshTokenValue): User
     {
-        return $this->userRepository->getByEmailAndToken($email, $refreshTokenValue);
+        return $this->userRepository->getByRefreshToken($refreshTokenValue);
     }
 }

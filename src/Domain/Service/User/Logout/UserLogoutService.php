@@ -20,9 +20,9 @@ final readonly class UserLogoutService implements UserLogoutServiceInterface
     }
 
     #[Override]
-    public function perform(string $email, string $refreshTokenValue): User
+    public function perform(string $refreshTokenValue): User
     {
-        $user = $this->userRepository->getByEmailAndToken($email, $refreshTokenValue);
+        $user = $this->userRepository->getByRefreshToken($refreshTokenValue);
         
         $token = $this->refreshTokenRepository->findByToken($refreshTokenValue);
         Assert::notNull($token);
