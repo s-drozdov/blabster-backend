@@ -26,10 +26,10 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/refresh, roles: PUBLIC_ACCESS }
         - { path: ^/health-check, roles: PUBLIC_ACCESS }
+        - { path: ^/otp, roles: PUBLIC_ACCESS }
+        - { path: ^/pow-challenge, roles: PUBLIC_ACCESS }
         - { path: ^/api/doc.json, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/logout, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/logout-all, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

@@ -58,6 +58,7 @@
         "ext-pcov": "*",
         "ext-xml": "*",
         "brainmaestro/composer-git-hooks": "^3.0",
+        "dama/doctrine-test-bundle": "^8.4",
         "deptrac/deptrac": "^4.4",
         "fakerphp/faker": "^1.24",
         "phpstan/extension-installer": "^1.4",
