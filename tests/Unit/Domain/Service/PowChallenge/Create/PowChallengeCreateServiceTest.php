@@ -12,7 +12,7 @@ use Blabster\Domain\Service\PowChallenge\Create\PowChallengeCreateService;
 
 final class PowChallengeCreateServiceTest extends TestCase
 {
-    private const int DIFFICULTY = 7;
+    private const int DIFFICULTY = 4;
 
     public function testPerformCreatesAndSavesPowChallenge(): void
     {

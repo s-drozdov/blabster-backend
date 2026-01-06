@@ -23,7 +23,7 @@ trait CachePersistable
     {
         /** @var T|null $entity */
         $entity = $this->cache->get(
-            $this->getStringHelper()->getSlugForClass((string) $uuid, $this),
+            $this->getStringHelper()->getSlugForClass((string) $uuid, $this->getEntityFqcn()),
         );
 
         Assert::notNull(
