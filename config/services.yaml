@@ -238,6 +238,7 @@ services:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand }
         arguments:
+            $isPowChallengeValidationEnabled: '%env(bool:IS_POW_CHALLENGE_VALIDATION_ENABLED)%'
             $isTurnstileValidationEnabled: '%env(bool:IS_TURNSTILE_VALIDATION_ENABLED)%'
 
     Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommandHandler:

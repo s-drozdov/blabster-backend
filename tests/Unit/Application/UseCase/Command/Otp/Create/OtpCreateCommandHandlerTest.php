@@ -31,6 +31,7 @@ final class OtpCreateCommandHandlerTest extends TestCase
     private const string UUID_STRING = '123e4567-e89b-12d3-a456-426614174000';
     private const string OTP_VALUE = '12345';
     private const string HOST = 'example.com';
+    private const bool IS_POW_CHALLENGE_VALIDATION_ENABLED = true;
     private const bool IS_TURNSTILE_VALIDATION_ENABLED = true;
 
     private UuidHelperInterface $uuidHelper;
@@ -73,6 +74,7 @@ final class OtpCreateCommandHandlerTest extends TestCase
             $this->createStub(TurnstileSdkInterface::class),
             $this->createStub(OtpCreateServiceInterface::class),
             $this->createStub(OtpMailServiceInterface::class),
+            self::IS_POW_CHALLENGE_VALIDATION_ENABLED,
             self::IS_TURNSTILE_VALIDATION_ENABLED,
         );
 
@@ -143,6 +145,7 @@ final class OtpCreateCommandHandlerTest extends TestCase
             $turnstileSdk,
             $otpCreateService,
             $otpMailService,
+            self::IS_POW_CHALLENGE_VALIDATION_ENABLED,
             self::IS_TURNSTILE_VALIDATION_ENABLED,
         );
 
@@ -199,6 +202,7 @@ final class OtpCreateCommandHandlerTest extends TestCase
             $turnstileSdk,
             $this->createStub(OtpCreateServiceInterface::class),
             $this->createStub(OtpMailServiceInterface::class),
+            self::IS_POW_CHALLENGE_VALIDATION_ENABLED,
             self::IS_TURNSTILE_VALIDATION_ENABLED,
         );
 

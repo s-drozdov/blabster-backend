@@ -27,6 +27,7 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
         private TurnstileSdkInterface $turnstileSdk,
         private OtpCreateServiceInterface $otpCreateService,
         private OtpMailServiceInterface $otpMailService,
+        private bool $isPowChallengeValidationEnabled,
         private bool $isTurnstileValidationEnabled,
     ) {
         /*_*/
@@ -53,17 +54,17 @@ final readonly class OtpCreateCommandHandler implements CommandHandlerInterface
 
     private function performValidation(OtpCreateCommand $command): void
     {
-        $this->powChallengeValidationService->perform(
-            $command->pow_challenge_uuid,
-            $command->pow_challenge_nonce,
-        );
-
-        if (!$this->isTurnstileValidationEnabled) {
-            return;
+        if ($this->isPowChallengeValidationEnabled) {
+            $this->powChallengeValidationService->perform(
+                $command->pow_challenge_uuid,
+                $command->pow_challenge_nonce,
+            );
         }
 
-        $turnstileResultDto = $this->turnstileSdk->getResult($command->turnstile_token);
-        Assert::true($turnstileResultDto->success, self::ERROR_VALIDATION);
+        if ($this->isTurnstileValidationEnabled) {
+            $turnstileResultDto = $this->turnstileSdk->getResult($command->turnstile_token);
+            Assert::true($turnstileResultDto->success, self::ERROR_VALIDATION);
+        }
     }
 
     private function createOtp(OtpCreateCommand $command): OtpCreateCommandResult
