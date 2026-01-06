@@ -212,7 +212,7 @@ services:
 
     Blabster\Infrastructure\Http\Controller\User\Login\LoginAction:
         arguments:
-            $isCookieSecure: '%env(bool:COOKIE_WITH_SECURE)%'
+            $isCookieSecure: '%env(bool:IS_COOKIE_WITH_SECURE)%'
 
 # event handlers
 
@@ -237,11 +237,12 @@ services:
     Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand }
+        arguments:
+            $isTurnstileValidationEnabled: '%env(bool:IS_TURNSTILE_VALIDATION_ENABLED)%'
 
     Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommand }
-
 
     Blabster\Application\UseCase\Command\PowChallenge\Create\PowChallengeCreateCommandHandler:
         tags:
