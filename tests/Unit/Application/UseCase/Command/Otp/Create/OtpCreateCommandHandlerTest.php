@@ -15,7 +15,7 @@ use Blabster\Infrastructure\Helper\Uuid\RamseyUuidHelper;
 use Blabster\Library\SDK\Turnstile\TurnstileSdkInterface;
 use Blabster\Library\SDK\Turnstile\Response\TurnstileResultDto;
 use Blabster\Domain\Service\Otp\Create\OtpCreateServiceInterface;
-use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
+use Blabster\Application\Service\Mail\Otp\OtpMailServiceInterface;
 use Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommand;
 use Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler;
 use Blabster\Domain\Service\Fingerprint\Match\FingerprintMatchServiceInterface;

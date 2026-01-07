@@ -14,8 +14,8 @@ enum OpenApiSchemaDescription: string
     case UserLogoutAllCommandResult = 'UserLogoutAllCommandResult';
     case UserRefreshCommand = 'UserRefreshCommand';
     case UserRefreshCommandResult = 'UserRefreshCommandResult';
-    case MessengerAccountQuery = 'MessengerAccountQuery';
-    case MessengerAccountQueryResult = 'MessengerAccountQueryResult';
+    case MessengerAccountGetQuery = 'MessengerAccountGetQuery';
+    case MessengerAccountGetQueryResult = 'MessengerAccountGetQueryResult';
     case OtpCreateCommand = 'OtpCreateCommand';
     case OtpCreateCommandResult = 'OtpCreateCommandResult';
     case PowChallengeCreateCommandResult = 'PowChallengeCreateCommandResult';

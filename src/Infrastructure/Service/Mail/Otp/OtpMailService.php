@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Service\Mail;
+namespace Blabster\Infrastructure\Service\Mail\Otp;
 
 use Override;
 use Symfony\Component\Mime\RawMessage;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
+use Blabster\Application\Service\Mail\Otp\OtpMailServiceInterface;
 
 final readonly class OtpMailService implements OtpMailServiceInterface
 {

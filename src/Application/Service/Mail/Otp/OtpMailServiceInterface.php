@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Application\Service\Otp\Mail;
+namespace Blabster\Application\Service\Mail\Otp;
 
 use Blabster\Application\Service\ServiceInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

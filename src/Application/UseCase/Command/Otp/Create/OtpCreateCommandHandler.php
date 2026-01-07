@@ -10,7 +10,7 @@ use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Library\SDK\Turnstile\TurnstileSdkInterface;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
 use Blabster\Domain\Service\Otp\Create\OtpCreateServiceInterface;
-use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
+use Blabster\Application\Service\Mail\Otp\OtpMailServiceInterface;
 use Blabster\Domain\Service\Fingerprint\Match\FingerprintMatchServiceInterface;
 use Blabster\Domain\Service\PowChallenge\Validation\PowChallengeValidationServiceInterface;
 

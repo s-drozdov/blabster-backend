@@ -7,7 +7,7 @@ namespace Blabster\Application\UseCase\Command\Otp\Send;
 use Override;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Blabster\Application\Bus\Command\CommandHandlerInterface;
-use Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface;
+use Blabster\Application\Service\Mail\Otp\OtpMailServiceInterface;
 
 /**
  * @implements CommandHandlerInterface<OtpSendCommand,OtpSendCommandResult>

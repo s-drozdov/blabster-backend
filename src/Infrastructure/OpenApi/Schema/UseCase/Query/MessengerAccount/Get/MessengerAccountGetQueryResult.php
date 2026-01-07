@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount;
+namespace Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount\Get;
 
 use OpenApi\Attributes as OA;
 
@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
  * @psalm-suppress MissingConstructor
  */
 #[OA\Schema()]
-final class MessengerAccountQueryResult
+final class MessengerAccountGetQueryResult
 {
     public string $login;
     public string $password;

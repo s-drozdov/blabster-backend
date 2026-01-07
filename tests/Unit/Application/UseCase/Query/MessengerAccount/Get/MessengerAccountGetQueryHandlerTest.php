@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Tests\Unit\Application\UseCase\Query\MessengerAccount;
+namespace Blabster\Tests\Unit\Application\UseCase\Query\MessengerAccount\Get;
 
 use PHPUnit\Framework\TestCase;
 use Blabster\Domain\Entity\User\User;
 use PHPUnit\Framework\Attributes\Test;
 use Blabster\Domain\Entity\User\MessengerAccount;
 use Blabster\Domain\Service\User\GetByEmail\UserByEmailGetServiceInterface;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryResult;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryHandler;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQuery;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryResult;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler;
 
-final class MessengerAccountQueryHandlerTest extends TestCase
+final class MessengerAccountGetQueryHandlerTest extends TestCase
 {
     private const string EMAIL = 'test@test.com';
     private const string LOGIN = 'login';
@@ -24,7 +24,7 @@ final class MessengerAccountQueryHandlerTest extends TestCase
     public function testInvokeSuccess(): void
     {
         // arrange
-        $query = new MessengerAccountQuery(
+        $query = new MessengerAccountGetQuery(
             email: self::EMAIL,
         );
 
@@ -45,13 +45,13 @@ final class MessengerAccountQueryHandlerTest extends TestCase
             ->willReturn($user)
         ;
 
-        $handler = new MessengerAccountQueryHandler($userByEmailGetService);
+        $handler = new MessengerAccountGetQueryHandler($userByEmailGetService);
 
         // act
         $result = $handler($query);
 
         // assert
-        self::assertInstanceOf(MessengerAccountQueryResult::class, $result);
+        self::assertInstanceOf(MessengerAccountGetQueryResult::class, $result);
         self::assertSame(self::LOGIN, $result->login);
         self::assertSame(self::PASSWORD, $result->password);
         self::assertSame(self::HOST, $result->host);

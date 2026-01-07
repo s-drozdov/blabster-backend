@@ -64,7 +64,15 @@ services:
     Psr\SimpleCache\CacheInterface:
         class: Symfony\Component\Cache\Psr16Cache
         arguments:
-            - '@cache.app' 
+            - '@cache.app'
+
+    Blabster\Infrastructure\Factory\Cache\MemcachedFactory: ~
+
+    Memcached:
+        class: Memcached
+        factory: ['@Blabster\Infrastructure\Factory\Cache\MemcachedFactory', create]
+        arguments:
+            $dsn: '%env(MEMCACHED_DSN)%'
 
 # factories
 
@@ -127,8 +135,8 @@ services:
 
 # application services
 
-    Blabster\Application\Service\Otp\Mail\OtpMailServiceInterface:
-        class: Blabster\Infrastructure\Service\Mail\OtpMailService
+    Blabster\Application\Service\Mail\Otp\OtpMailServiceInterface:
+        class: Blabster\Infrastructure\Service\Mail\Otp\OtpMailService
         arguments:
             $expirationSeconds: '%env(OTP_TTL)%'
             $senderEmail: '%env(MAILER_NOREPLY_SENDER)%'
@@ -137,6 +145,9 @@ services:
             $templateText: '%env(MAILER_TEMPLATE_TEXT)%'
             $messageLocale: '%env(MAILER_LOCALE)%'
             $replyToEmail: '%env(MAILER_REPLY_TO)%'
+
+    Blabster\Application\Service\Cache\HealthCheck\CacheHealthCheckServiceInterface:
+        class: Blabster\Infrastructure\Service\Cache\HealthCheck\MemcachedHealthCheckService
         
 # library
 
@@ -264,4 +275,12 @@ services:
     Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand }
+
+    Blabster\Application\UseCase\Query\Cache\HealthCheck\CacheHealthCheckQueryHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\Cache\HealthCheck\CacheHealthCheckQuery }
+
+    Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler }
     

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\ValueResolver\Query\MessengerAccount;
+namespace Blabster\Infrastructure\Http\ValueResolver\Query\MessengerAccount\Get;
 
 use Override;
 use Webmozart\Assert\Assert;
@@ -10,13 +10,13 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Blabster\Application\Bus\CqrsElementInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQuery;
 use Blabster\Infrastructure\Http\ValueResolver\AbstractValueResolver;
 
 /**
- * @extends AbstractValueResolver<MessengerAccountQuery>
+ * @extends AbstractValueResolver<MessengerAccountGetQuery>
  */
-final readonly class MessengerAccountQueryValueResolver extends AbstractValueResolver
+final readonly class MessengerAccountGetQueryValueResolver extends AbstractValueResolver
 {
     public function __construct(
         private Security $security,
@@ -28,7 +28,7 @@ final readonly class MessengerAccountQueryValueResolver extends AbstractValueRes
     #[Override]
     protected function getTargetClass(): string
     {
-        return MessengerAccountQuery::class;
+        return MessengerAccountGetQuery::class;
     }
 
     #[Override]
@@ -37,7 +37,7 @@ final readonly class MessengerAccountQueryValueResolver extends AbstractValueRes
         $user = $this->security->getUser();
         Assert::notNull($user);
 
-        return new MessengerAccountQuery(
+        return new MessengerAccountGetQuery(
             email: $user->getUserIdentifier(),
         );
     }

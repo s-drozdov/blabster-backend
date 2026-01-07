@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blabster\Infrastructure\Http\Controller\MessengerAccount;
+namespace Blabster\Infrastructure\Http\Controller\MessengerAccount\Get;
 
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;
@@ -20,9 +20,9 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQuery;
-use Blabster\Application\UseCase\Query\MessengerAccount\MessengerAccountQueryResult;
-use Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount\MessengerAccountQueryResult as MessengerAccountQueryResultSchema;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQuery;
+use Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryResult;
+use Blabster\Infrastructure\OpenApi\Schema\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryResult as MessengerAccountGetQueryResultSchema;
 
 #[AsController]
 #[Route(Action::messenger_account_get->value, name: Action::messenger_account_get->name, methods: [Request::METHOD_GET])]
@@ -30,7 +30,7 @@ final class MessengerAccountGetAction
 {
     public function __construct(
 
-        /** @var QueryBusInterface<MessengerAccountQuery,MessengerAccountQueryResult> */
+        /** @var QueryBusInterface<MessengerAccountGetQuery,MessengerAccountGetQueryResult> */
         private QueryBusInterface $queryBus,
 
         private SerializerInterface $serializer,
@@ -46,14 +46,14 @@ final class MessengerAccountGetAction
         responses: [
             new OA\Response(
                 response: Response::HTTP_OK,
-                description: OpenApiSchemaDescription::MessengerAccountQueryResult->value,
+                description: OpenApiSchemaDescription::MessengerAccountGetQueryResult->value,
                 content: new OA\JsonContent(
-                    ref: new Model(type: MessengerAccountQueryResultSchema::class),
+                    ref: new Model(type: MessengerAccountGetQueryResultSchema::class),
                 ),
             ),
         ],
     )]
-    public function __invoke(MessengerAccountQuery $query): Response
+    public function __invoke(MessengerAccountGetQuery $query): Response
     {
         return JsonResponse::fromJsonString(
             $this->serializer->serialize(
