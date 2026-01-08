@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Repository;
 
-use Blabster\Domain\Entity\EntityInterface;
+use RuntimeException;
 use InvalidArgumentException;
 use Blabster\Domain\Entity\PowChallenge;
+use Blabster\Domain\Entity\EntityInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
 
 /**
@@ -20,5 +21,8 @@ interface PowChallengeRepositoryInterface extends RepositoryInterface
      */
     public function getByUuid(UuidInterface $uuid): EntityInterface;
 
+    /**
+     * @throws RuntimeException
+     */
     public function save(PowChallenge $entity): void;
 }

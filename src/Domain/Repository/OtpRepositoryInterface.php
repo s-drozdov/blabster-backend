@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Repository;
 
+use RuntimeException;
 use InvalidArgumentException;
 use Blabster\Domain\Entity\Otp;
 use Blabster\Domain\Entity\EntityInterface;
@@ -20,5 +21,8 @@ interface OtpRepositoryInterface extends RepositoryInterface
      */
     public function getByUuid(UuidInterface $uuid): EntityInterface;
 
+    /**
+     * @throws RuntimeException
+     */
     public function save(Otp $entity): void;
 }

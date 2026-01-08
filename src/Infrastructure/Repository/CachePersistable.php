@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Repository;
 
+use RuntimeException;
 use Webmozart\Assert\Assert;
+use Psr\SimpleCache\CacheInterface;
 use Blabster\Domain\Entity\EntityInterface;
-use Blabster\Domain\Repository\RepositoryInterface;
 use Blabster\Domain\ValueObject\UuidInterface;
+use Blabster\Domain\Repository\RepositoryInterface;
 use Blabster\Domain\Helper\String\StringHelperInterface;
 
 /**
@@ -22,7 +24,7 @@ trait CachePersistable
     public function getByUuid(UuidInterface $uuid): EntityInterface
     {
         /** @var T|null $entity */
-        $entity = $this->cache->get(
+        $entity = $this->getCache()->get(
             $this->getStringHelper()->getSlugForClass((string) $uuid, $this->getEntityFqcn()),
         );
 
@@ -41,7 +43,7 @@ trait CachePersistable
     public function findByUuid(UuidInterface $uuid): ?EntityInterface
     {
         /** @var T|null $entity */
-        $entity = $this->cache->get(
+        $entity = $this->getCache()->get(
             $this->stringHelper->getSlugForClass((string) $uuid, $this->getEntityFqcn()),
         );
 
@@ -50,13 +52,23 @@ trait CachePersistable
 
     public function save(EntityInterface $entity): void
     {
-        $this->cache->set(
+        $isSuccess = $this->getCache()->set(
             $this->getStringHelper()->getSlugForClass((string) $entity->getUuid(), $entity),
             $entity,
             $this->getTtl(),
         );
+
+        if ($isSuccess) {
+            return;
+        }
+
+        throw new RuntimeException(
+            $this->getNotFoundErrorMessage($entity->getUuid()),
+        );
     }
     
+    abstract private function getCache(): CacheInterface;
+
     abstract private function getTtl(): ?int;
 
     abstract private function getStringHelper(): StringHelperInterface;
@@ -70,7 +82,7 @@ trait CachePersistable
     {
         return sprintf(
             RepositoryInterface::ERROR_NOT_FOUND, 
-            $this->getStringHelper()->getClassShortName($this), 
+            $this->getStringHelper()->getClassShortName($this->getEntityFqcn()), 
             $uuid,
         );
     }

@@ -284,3 +284,7 @@ services:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler }
     
+    Blabster\Application\UseCase\Query\Cache\Dump\CacheDumpQueryHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\Cache\Dump\CacheDumpQuery }
+    

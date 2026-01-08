@@ -27,6 +27,12 @@ final class OtpRepository implements OtpRepositoryInterface
     }
 
     #[Override]
+    private function getCache(): CacheInterface
+    {
+        return $this->cache;
+    }
+
+    #[Override]
     private function getTtl(): ?int
     {
         return $this->ttlSeconds;

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Blabster\Infrastructure\Repository;
 
-use Blabster\Domain\Entity\Fingerprint;
-use Psr\SimpleCache\CacheInterface;
-use Blabster\Domain\Repository\FingerprintRepositoryInterface;
-use Blabster\Domain\Helper\String\StringHelperInterface;
 use Override;
+use RuntimeException;
+use Psr\SimpleCache\CacheInterface;
+use Blabster\Domain\Entity\Fingerprint;
+use Blabster\Domain\Helper\String\StringHelperInterface;
+use Blabster\Domain\Repository\FingerprintRepositoryInterface;
 
 final class FingerprintRepository implements FingerprintRepositoryInterface
 {
@@ -34,10 +35,22 @@ final class FingerprintRepository implements FingerprintRepositoryInterface
     #[Override]
     public function save(Fingerprint $entity): void
     {
-        $this->cache->set(
+        $isSuccess = $this->cache->set(
             $this->stringHelper->getSlugForClass($entity->getValue(), $entity),
             $entity,
             $this->ttlSeconds,
+        );
+
+        if ($isSuccess) {
+            return;
+        }
+
+        throw new RuntimeException(
+            sprintf(
+                self::ERROR_NOT_FOUND, 
+                $this->stringHelper->getClassShortName($entity), 
+                $entity->getUuid(),
+            ),
         );
     }
 }

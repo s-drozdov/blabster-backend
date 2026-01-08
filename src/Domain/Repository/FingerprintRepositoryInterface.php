@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blabster\Domain\Repository;
 
+use RuntimeException;
 use Blabster\Domain\Entity\Fingerprint;
 use Blabster\Domain\Entity\EntityInterface;
 
@@ -17,5 +18,8 @@ interface FingerprintRepositoryInterface extends RepositoryInterface
      */
     public function findByValue(string $value): ?EntityInterface;
 
+    /**
+     * @throws RuntimeException
+     */
     public function save(Fingerprint $entity): void;
 }
