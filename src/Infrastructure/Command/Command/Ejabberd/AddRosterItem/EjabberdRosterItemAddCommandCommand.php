@@ -45,7 +45,7 @@ final class EjabberdRosterItemAddCommandCommand extends Command
             sprintf(
                 <<<HELPBLOCK
                     usage:
-                        bin/console ejabberd:Roster-item:add \
+                        bin/console ejabberd:roster-item:add \
                             --%s=LOCALUSER # username which contact list must be updated \
                             --%s=LOCALHOST # hostname of user which contact list must be updated \
                             --%s=USER # contact username \
@@ -57,7 +57,7 @@ final class EjabberdRosterItemAddCommandCommand extends Command
                             ... \
                             --%s=SUBS # contact subscription
                     example: 
-                        bin/console ejabberd:Roster-item:add --%s=user --%s=host --%s=contact_user --%s=contact_host --%s=contact_nick --%s="Contact subscription" [ --%s=group1 --%s=group2 --%s=group3 ]
+                        bin/console ejabberd:roster-item:add --%s=user --%s=host --%s=contact_user --%s=contact_host --%s=contact_nick --%s="Contact subscription" [ --%s=group1 --%s=group2 --%s=group3 ]
                 HELPBLOCK,
 
                 self::LOCALUSER,
