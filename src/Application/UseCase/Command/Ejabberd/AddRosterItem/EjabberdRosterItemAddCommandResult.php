@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Blabster\Application\UseCase\Command\Ejabberd\AddRosterItem;
+
+use Blabster\Application\Bus\Command\CommandResultInterface;
+
+final readonly class EjabberdRosterItemAddCommandResult implements CommandResultInterface
+{
+    /*_*/
+}

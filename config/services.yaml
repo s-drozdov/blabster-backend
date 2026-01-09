@@ -38,6 +38,30 @@ services:
     Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface:
         class: Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory
 
+    http_client.external.symfony:
+        class: Symfony\Component\HttpClient\HttpClient
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            - { }
+
+    http_client.external.psr18:
+        class: Symfony\Component\HttpClient\Psr18Client
+        arguments:
+            - '@http_client.external.symfony'
+    
+    http_client.internal.symfony:
+        class: Symfony\Component\HttpClient\HttpClient
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            - { verify_peer: false, verify_host: false }
+
+    http_client.internal.psr18:
+        class: Symfony\Component\HttpClient\Psr18Client
+        arguments:
+            - '@http_client.internal.symfony'
+
+    Psr\Http\Client\ClientInterface: '@http_client.external.psr18'
+
     Mezzio\ProblemDetails\ProblemDetailsResponseFactory:
         arguments:
             $responseFactory: '@Psr\Http\Message\ResponseFactoryInterface'
@@ -165,6 +189,7 @@ services:
     Blabster\Library\SDK\Ejabberd\EjabberdSdkInterface:
         class: Blabster\Library\SDK\Ejabberd\EjabberdSdk
         arguments:
+            $client: '@http_client.internal.psr18'
             $apiUrl: '%env(EJABBERD_API_URL)%'
             $apiBasicLogin: '%env(EJABBERD_API_BASIC_LOGIN)%'
             $apiBasicPassword: '%env(EJABBERD_API_BASIC_PASSWORD)%'
@@ -231,19 +256,27 @@ services:
         arguments:
             $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
 
-    Blabster\Application\EventHandler\MessengerAccount\Registered\AddAdminContactToUserRoaster:
+    Blabster\Application\EventHandler\MessengerAccount\Registered\AddAdminContactToUserRoster:
         arguments:
             $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
             $adminContactLogin: '%env(MESSENGER_ADMIN_CONTACT_LOGIN)%'
             $adminContactNickname: '%env(MESSENGER_ADMIN_CONTACT_NICKNAME)%'
 
-    Blabster\Application\EventHandler\MessengerAccount\Registered\AddUserContactToAdminRoaster:
+    Blabster\Application\EventHandler\MessengerAccount\Registered\AddUserContactToAdminRoster:
         arguments:
             $messengerHost: '%env(MESSENGER_DEFAULT_HOST)%'
             $adminContactLogin: '%env(MESSENGER_ADMIN_CONTACT_LOGIN)%'
             $adminContactGroup: '%env(MESSENGER_ADMIN_CONTACT_GROUP)%'
 
 # bus handlers
+
+    Blabster\Application\UseCase\Command\Ejabberd\AddRosterItem\EjabberdRosterItemAddCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Ejabberd\AddRosterItem\EjabberdRosterItemAddCommand }
+
+    Blabster\Application\UseCase\Command\Ejabberd\Register\EjabberdRegisterCommandHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Command\Ejabberd\Register\EjabberdRegisterCommand }
 
     Blabster\Application\UseCase\Command\Otp\Create\OtpCreateCommandHandler:
         tags:
@@ -279,6 +312,10 @@ services:
     Blabster\Application\UseCase\Query\Cache\HealthCheck\CacheHealthCheckQueryHandler:
         tags:
             - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\Cache\HealthCheck\CacheHealthCheckQuery }
+
+    Blabster\Application\UseCase\Query\Ejabberd\CheckAccount\EjabberdAccountCheckQueryHandler:
+        tags:
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\Ejabberd\CheckAccount\EjabberdAccountCheckQuery }
 
     Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler:
         tags:

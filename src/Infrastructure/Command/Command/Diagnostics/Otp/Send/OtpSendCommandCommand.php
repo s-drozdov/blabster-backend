@@ -21,8 +21,8 @@ use Blabster\Application\UseCase\Command\Otp\Send\OtpSendCommandResult;
 )]
 final class OtpSendCommandCommand extends Command
 {
-    private const EMAIL = 'email';
-    private const OTP_CODE = 'otp_code';
+    private const string EMAIL = 'email';
+    private const string OTP_CODE = 'otp_code';
 
     public function __construct(
         private StringHelperInterface $stringHelper,
@@ -46,8 +46,10 @@ final class OtpSendCommandCommand extends Command
                     example: 
                         bin/console diagnostics:otp:send --%s=test@test.com --%s=12345
                 HELPBLOCK,
+
                 self::EMAIL,
                 self::OTP_CODE,
+
                 self::EMAIL,
                 self::OTP_CODE,
             ),
@@ -55,7 +57,7 @@ final class OtpSendCommandCommand extends Command
 
         $this
             ->addOption(self::EMAIL, null, InputOption::VALUE_REQUIRED, $this->stringHelper->snakeToHumanReadable(self::EMAIL))
-            ->addOption(self::OTP_CODE, null, InputOption::VALUE_OPTIONAL, $this->stringHelper->snakeToHumanReadable(self::OTP_CODE))
+            ->addOption(self::OTP_CODE, null, InputOption::VALUE_REQUIRED, $this->stringHelper->snakeToHumanReadable(self::OTP_CODE))
         ;
     }
 

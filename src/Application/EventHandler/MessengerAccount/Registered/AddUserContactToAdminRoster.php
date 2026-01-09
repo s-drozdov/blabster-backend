@@ -13,15 +13,13 @@ use Blabster\Library\SDK\Ejabberd\Request\AddRosterItemRequestDto;
 /**
  * @implements EventHandlerInterface<MessengerAccountRegistered>
  */
-final readonly class AddAdminContactToUserRoaster implements EventHandlerInterface
+final readonly class AddUserContactToAdminRoster implements EventHandlerInterface
 {
-    private const array DEFAULT_GROUPS = [];
-
     public function __construct(
         private EjabberdSdkInterface $ejabberdSdk,
         private string $messengerHost,
         private string $adminContactLogin,
-        private string $adminContactNickname,
+        private string $adminContactGroup,
     ) {
         /*_*/
     }
@@ -29,12 +27,12 @@ final readonly class AddAdminContactToUserRoaster implements EventHandlerInterfa
     public function __invoke(MessengerAccountRegistered $event): void
     {
         $requestDto = new AddRosterItemRequestDto(
-            localuser: $event->login,
-            localhost: $event->host,
-            user: $this->adminContactLogin,
-            host: $this->messengerHost,
-            nick: $this->adminContactNickname,
-            groups: self::DEFAULT_GROUPS,
+            localuser: $this->adminContactLogin,
+            localhost: $this->messengerHost,
+            user: $event->login,
+            host: $event->host,
+            nick: $event->login,
+            groups: [$this->adminContactGroup],
             subs: RosterSubscriptionStatus::EveryoneSee->value,
         );
 

@@ -17,7 +17,7 @@ use Blabster\Application\UseCase\Query\Cache\Dump\CacheDumpQueryResult;
 
 #[AsCommand(
     name: 'diagnostics:cache:dump',
-    description: 'Cache health check',
+    description: 'Cache dump key',
 )]
 final class CacheDumpQueryCommand extends Command
 {
