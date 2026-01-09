@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Blabster\Infrastructure\Command\Command\Ejabberd\AddRosterItem;
 
 use Override;
+use Webmozart\Assert\Assert;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Blabster\Domain\Helper\String\StringHelperInterface;
+use Blabster\Library\SDK\Ejabberd\Enum\RosterSubscriptionStatus;
 use Blabster\Infrastructure\Bus\Processor\CommandBusCommandProcessor;
 use Blabster\Application\UseCase\Command\Ejabberd\AddRosterItem\EjabberdRosterItemAddCommand;
 use Blabster\Application\UseCase\Command\Ejabberd\AddRosterItem\EjabberdRosterItemAddCommandResult;
@@ -51,13 +53,10 @@ final class EjabberdRosterItemAddCommandCommand extends Command
                             --%s=USER # contact username \
                             --%s=HOST # contact hostname \
                             --%s=NICK # contact displayed nickname \
-                            --%s=GROUP1 # contact group 1 if needed \
-                            --%s=GROUP2 # contact group 2 if needed \
-                            --%s=GROUP3 # contact group 3 if needed \
-                            ... \
-                            --%s=SUBS # contact subscription
+                            --%s=GROUP1 # contact group if needed (optional) \
+                            --%s=SUBS # subscription can be one of: none|from|to|both
                     example: 
-                        bin/console ejabberd:roster-item:add --%s=user --%s=host --%s=contact_user --%s=contact_host --%s=contact_nick --%s="Contact subscription" [ --%s=group1 --%s=group2 --%s=group3 ]
+                        bin/console ejabberd:roster-item:add --%s=user --%s=host --%s=contact_user --%s=contact_host --%s=contact_nick --%s=both [ --%s=group1 ]
                 HELPBLOCK,
 
                 self::LOCALUSER,
@@ -66,8 +65,6 @@ final class EjabberdRosterItemAddCommandCommand extends Command
                 self::HOST,
                 self::NICK,
                 self::GROUP_LIST,
-                self::GROUP_LIST,
-                self::GROUP_LIST,
                 self::SUBS,
 
                 self::LOCALUSER,
@@ -76,8 +73,6 @@ final class EjabberdRosterItemAddCommandCommand extends Command
                 self::HOST,
                 self::NICK,
                 self::SUBS,
-                self::GROUP_LIST,
-                self::GROUP_LIST,
                 self::GROUP_LIST,
             ),
         );
@@ -89,13 +84,23 @@ final class EjabberdRosterItemAddCommandCommand extends Command
             ->addOption(self::HOST, null, InputOption::VALUE_REQUIRED, $this->stringHelper->snakeToHumanReadable(self::HOST))
             ->addOption(self::NICK, null, InputOption::VALUE_REQUIRED, $this->stringHelper->snakeToHumanReadable(self::NICK))
             ->addOption(self::GROUP_LIST, null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, $this->stringHelper->snakeToHumanReadable(self::GROUP_LIST))
-            ->addOption(self::SUBS, null, InputOption::VALUE_REQUIRED, $this->stringHelper->snakeToHumanReadable(self::SUBS))
+            ->addOption(
+                self::SUBS, 
+                null, 
+                InputOption::VALUE_REQUIRED, 
+                $this->stringHelper->snakeToHumanReadable(self::SUBS), 
+                null, 
+                array_map(fn (RosterSubscriptionStatus $case) => $case->value, RosterSubscriptionStatus::cases()),
+            )
         ;
     }
 
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        Assert::string($input->getOptions()[self::SUBS]);
+        RosterSubscriptionStatus::from($input->getOptions()[self::SUBS]);
+
         return $this->busProcessor->process($input, $output, EjabberdRosterItemAddCommand::class);
     }
 }
