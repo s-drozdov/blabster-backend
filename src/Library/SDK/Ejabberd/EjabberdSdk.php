@@ -50,7 +50,7 @@ final class EjabberdSdk implements EjabberdSdkInterface
     public function checkAccount(CheckAccountRequestDto $requestDto): CheckAccountResponseDto
     {
         $response = $this->client->sendRequest(
-            $this->getRequest($requestDto, EjabberdEndpoint::register->value),
+            $this->getRequest($requestDto, EjabberdEndpoint::check_account->value),
         );
 
         Assert::eq($response->getStatusCode(), Response::HTTP_OK, SdkInterface::ERROR_BAD_RESPONSE);
