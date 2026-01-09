@@ -96,6 +96,6 @@ final class EjabberdRosterItemAddCommandCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return $this->busProcessor->process($input, $output, EjabberdRosterItemAddCommandResult::class);
+        return $this->busProcessor->process($input, $output, EjabberdRosterItemAddCommand::class);
     }
 }

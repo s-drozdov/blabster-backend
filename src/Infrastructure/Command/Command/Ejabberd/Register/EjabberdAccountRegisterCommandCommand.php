@@ -69,6 +69,6 @@ final class EjabberdAccountRegisterCommandCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return $this->busProcessor->process($input, $output, EjabberdRegisterCommandResult::class);
+        return $this->busProcessor->process($input, $output, EjabberdRegisterCommand::class);
     }
 }
