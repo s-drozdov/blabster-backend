@@ -26,7 +26,7 @@ final readonly class UserFactory implements UserFactoryInterface
 
         $user = new User(
             uuid: $this->uuidHelper->create(),
-            email: $email,
+            email: mb_strtolower($email),
             created_at: new DateTimeImmutable(),
         );
 

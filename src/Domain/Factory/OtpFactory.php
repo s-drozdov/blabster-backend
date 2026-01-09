@@ -21,7 +21,7 @@ final readonly class OtpFactory implements OtpFactoryInterface
     {
         return new Otp(
             uuid: $this->uuidHelper->create(),
-            email: $email,
+            email: mb_strtolower($email),
             code: sprintf('%05d', random_int(0, 99999)),
         );
     }

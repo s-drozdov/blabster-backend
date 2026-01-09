@@ -19,6 +19,8 @@ final readonly class UserByEmailGetService implements UserByEmailGetServiceInter
     #[Override]
     public function perform(string $email): ?User
     {
-        return $this->userRepository->findByEmail($email);
+        return $this->userRepository->findByEmail(
+            mb_strtolower($email),
+        );
     }
 }

@@ -25,7 +25,7 @@ final readonly class OtpVerifyService implements OtpVerifyServiceInterface
     {
         $otp = $this->otpRepository->getByUuid($otpUuid);
 
-        Assert::eq($otp->getEmail(), $email, self::ERROR_EMAIL_MISMATCH);
+        Assert::eq($otp->getEmail(), mb_strtolower($email), self::ERROR_EMAIL_MISMATCH);
         Assert::eq($otp->getCode(), $otpCode, self::ERROR_CODE_MISMATCH);
     }
 }
