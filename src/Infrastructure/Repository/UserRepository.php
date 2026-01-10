@@ -47,7 +47,7 @@ final class UserRepository extends EntityRepository implements UserRepositoryInt
     public function getByRefreshToken(string $refreshTokenValue): User
     {
         $entity = $this->createQueryBuilder('u')
-            ->innerJoin('u.refreshTokens', 'rt')
+            ->innerJoin('u.refreshTokenList', 'rt')
             ->andWhere('rt.value = :token')
             ->andWhere('rt.expires_at > :now')
             ->setParameter('token', $refreshTokenValue)
