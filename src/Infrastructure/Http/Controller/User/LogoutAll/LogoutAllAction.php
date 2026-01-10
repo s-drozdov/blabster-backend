@@ -7,18 +7,20 @@ namespace Blabster\Infrastructure\Http\Controller\User\LogoutAll;
 use OpenApi\Attributes as OA;
 use Blabster\Infrastructure\Enum\Action;
 use Nelmio\ApiDocBundle\Attribute\Model;
+use Blabster\Infrastructure\Enum\Resource;
+use Blabster\Infrastructure\Enum\CookieKey;
 use Blabster\Infrastructure\Enum\OpenApiTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Blabster\Infrastructure\Enum\OpenApiSummary;
-use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blabster\Infrastructure\Enum\OpenApiOperationId;
 use Blabster\Library\Enum\SerializationContextParam;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
 use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommand;
 use Blabster\Application\UseCase\Command\User\LogoutAll\UserLogoutAllCommandResult;
@@ -63,7 +65,7 @@ final class LogoutAllAction
     )]
     public function __invoke(UserLogoutAllCommand $command): Response
     {
-        return JsonResponse::fromJsonString(
+        $response = JsonResponse::fromJsonString(
             $this->serializer->serialize(
                 $this->commandBus->execute($command),
                 JsonEncoder::FORMAT,
@@ -71,5 +73,12 @@ final class LogoutAllAction
             ),
             Response::HTTP_OK,
         );
+
+        $response->headers->removeCookie(
+            CookieKey::RefreshToken->value, 
+            Resource::Refresh->value,
+        );
+
+        return $response;
     }
 }
