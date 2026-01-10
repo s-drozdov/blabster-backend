@@ -16,13 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Blabster\Infrastructure\Enum\OpenApiSummary;
-use Blabster\Application\Bus\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blabster\Infrastructure\Enum\OpenApiOperationId;
 use Blabster\Library\Enum\SerializationContextParam;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Blabster\Application\Bus\Command\CommandBusInterface;
 use Blabster\Infrastructure\Enum\OpenApiSchemaDescription;
 use Blabster\Application\UseCase\Command\User\Login\UserLoginCommand;
 use Blabster\Application\UseCase\Command\User\Login\UserLoginCommandResult;
@@ -39,6 +39,7 @@ final class LoginAction
         private CommandBusInterface $commandBus,
 
         private SerializerInterface $serializer,
+        private bool $isRefreshTokenCookieSameSiteStrict,
         private bool $isCookieSecure,
     ) {
         /*_*/
@@ -84,7 +85,7 @@ final class LoginAction
             ->withValue($result->refresh_token_value)
             ->withHttpOnly(true)
             ->withSecure($this->isCookieSecure)
-            ->withSameSite(SameSite::Strict->value)
+            ->withSameSite($this->isRefreshTokenCookieSameSiteStrict ? SameSite::Strict->value : SameSite::None->value)
             ->withPath(Resource::Refresh->value)
             ->withExpires($result->refresh_token_expires_at);
 

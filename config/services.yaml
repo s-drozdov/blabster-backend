@@ -248,6 +248,7 @@ services:
 
     Blabster\Infrastructure\Http\Controller\User\Login\LoginAction:
         arguments:
+            $isRefreshTokenCookieSameSiteStrict: '%env(bool:IS_REFRESH_TOKEN_COOKIE_SAME_SITE_STRICT)%'
             $isCookieSecure: '%env(bool:IS_COOKIE_WITH_SECURE)%'
 
 # event handlers
