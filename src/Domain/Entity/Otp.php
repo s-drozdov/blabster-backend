@@ -10,7 +10,7 @@ use Blabster\Domain\ValueObject\UuidInterface;
 /**
  * @psalm-suppress ClassMustBeFinal The class cannot be final because it is used as a test double in PHPUnit
  */
-readonly class Otp implements EntityInterface
+class Otp implements EntityInterface
 {
     public function __construct(
         private UuidInterface $uuid,
