@@ -6,6 +6,7 @@ namespace Blabster\Infrastructure\Enum;
 
 enum Resource: string
 {
+    case Root = '/';
     case HealthCheck = '/health-check';
     case Login = '/login';
     case Logout = '/logout';

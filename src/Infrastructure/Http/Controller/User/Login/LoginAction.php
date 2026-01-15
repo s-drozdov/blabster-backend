@@ -86,7 +86,7 @@ final class LoginAction
             ->withHttpOnly(true)
             ->withSecure($this->isCookieSecure)
             ->withSameSite($this->isRefreshTokenCookieSameSiteStrict ? SameSite::Strict->value : SameSite::None->value)
-            ->withPath(Resource::Refresh->value)
+            ->withPath(Resource::Root->value)
             ->withExpires($result->refresh_token_expires_at);
 
         $response->headers->setCookie($refreshTokenCookie);
