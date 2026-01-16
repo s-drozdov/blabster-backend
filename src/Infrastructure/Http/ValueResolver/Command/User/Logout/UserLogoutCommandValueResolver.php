@@ -37,7 +37,6 @@ final readonly class UserLogoutCommandValueResolver extends AbstractValueResolve
     protected function createFromRequest(Request $request): CqrsElementInterface
     {
         $refreshToken = $request->cookies->get(CookieKey::RefreshToken->value);
-        Assert::notEmpty($refreshToken);
 
         return $this->denormalizer->denormalize(
             array_merge(
