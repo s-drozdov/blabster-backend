@@ -320,7 +320,7 @@ services:
 
     Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler:
         tags:
-            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQueryHandler }
+            - { name: messenger.message_handler, handles: Blabster\Application\UseCase\Query\MessengerAccount\Get\MessengerAccountGetQuery }
     
     Blabster\Application\UseCase\Query\Cache\Dump\CacheDumpQueryHandler:
         tags:
